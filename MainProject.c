@@ -7,7 +7,7 @@ FILE* logfile;
 void file (void)
 {
     logfile = fopen("log.txt", "w");
-    fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin\nCindy Chih");
+    fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nCindy Chih");
     fclose(logfile);
     return;
 }
