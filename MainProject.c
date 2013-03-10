@@ -3,16 +3,16 @@
 #include <time.h>
 #include <stdlib.h>
 
-FILE* logfile;
+FILE* logfile; //LogFile Part
 void file (void)
 {
     logfile = fopen("log.txt", "w");
-    fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nYung-Hsiang Chih 999751148");
+    fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nYung-Hsiang Chih 999751148"); //Student Numbers
     fclose(logfile);
     return;
 }
 
-char NumToColour(int num){
+char NumToColour(int num){ //Board Generator Section
 char colour;
 if (num==1)    colour = 'r';
 else if (num==2)    colour = 'y';
