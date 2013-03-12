@@ -51,3 +51,42 @@ printf ("\n");
 }
 return;
 }
+
+/* below are the functions I did I have not tested them yet and I still need to add more comments--- Rachel*/
+char compileBoard(int rows, int cols){/* this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
+    it takes as paramers the row and colom size
+    the character array corisponds to a color.*/
+    int i,j, temp;
+    char arr[col][row];
+    srand ((unsigned)time(NULL));
+    for(i=0;i<cols;i++){
+        for(j=0;j<rows;j++){
+            temp=rand()%4+1;
+            arr[i][j]=NumToColour(temp);
+            }
+
+        }
+    return arr;
+}
+int deleteAreaCheck(int x, int y, char arr){
+    int score=0
+    char given=arr[x][y];
+    if(arr[x+1][y]==given ||arr[x-1][y]==given ||arr[x][y+1]==given ||arr[x][y-1]==given){
+        score=deleteArea(given, x, y, arr,0);
+    }
+    return score;
+}
+int deleteArea(char given, int x, int y, char arr[][], int score){
+    if(arr[x][y]==given){
+        arr[x][y]='0';
+        score+=1// check to see if this is the right way to calculate the score.
+        score+=deleteArea(given, x+1, y, arr);
+        score+=deleteArea(given, x-1, y, arr);
+        score+=deleteArea(given, x, y+1, arr);
+        score+=deleteArea(given, x, y-1, arr);
+        return score;
+    }
+    else{
+        return 0
+    }
+}
