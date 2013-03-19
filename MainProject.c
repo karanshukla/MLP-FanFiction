@@ -54,8 +54,8 @@ return;
 
 /* below are the functions I did I have not tested them yet and I still need to add more comments--- Rachel*/
 char compileBoard(int rows, int cols){/* this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
-    it takes as paramers the row and colom size
-    the character array corisponds to a color.*/
+                                         it takes as paramers the row and colom size
+                                         the character array corisponds to a color.*/
     int i,j, temp;
     char arr[col][row];
     srand ((unsigned)time(NULL));
