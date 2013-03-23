@@ -101,7 +101,7 @@ int deleteArea(char given, int x, int y, char arr[][], int score){
 int RowPick (void)
 {
     srand(time(NULL)); //ensure random number
-	int Rowpick = rand()%(ROWS); //ROWS as defined by the function for grabbing the amount of rows
+	int Rowpick = rand()%(ROW); //ROWS as defined by the function for grabbing the amount of rows
 	printf("I pick row %d", Rowpick);
 	return Rowpick;
 }
@@ -109,7 +109,7 @@ int RowPick (void)
 int ColPick (void)
 {
 		srand(time(NULL));
-		int Colpick = rand() % (COLS);
+		int Colpick = rand() % (COL);
 		printf("I pick row %d", Colpick);
 		return Colpick;
 }
