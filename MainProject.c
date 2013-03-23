@@ -90,3 +90,27 @@ int deleteArea(char given, int x, int y, char arr[][], int score){
         return 0
     }
 }
+
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <time.h>
+
+//These are the AI/Computer Play Functions.
+
+int RowPick (void)
+{
+    srand(time(NULL)); //ensure random number
+	int Rowpick = rand()%(ROWS); //ROWS as defined by the function for grabbing the amount of rows
+	printf("I pick row %d", Rowpick);
+	return Rowpick;
+}
+
+int ColPick (void)
+{
+		srand(time(NULL));
+		int Colpick = rand() % (COLS);
+		printf("I pick row %d", Colpick);
+		return Colpick;
+}
+
