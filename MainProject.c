@@ -37,17 +37,17 @@ void printBoard (char arr[][36], int ROW, int COL){
 
 int col, row;   //row and col are inverted because of some weird logic going on here
 
-for (col=0; col<COL+1; col++){
-    for (row=-1; row<ROW; row++){
+for (col=0; col<ROW+1; col++){
+    for (row=-1; row<COL; row++){
         if (row==-1){        //for y-coordinates
-            if (col==COL)       //for the bottom left corner space
+            if (col==ROW)       //for the bottom left corner space
                 printf ("    ");
-            else if ((COL-col)>10)  //for coordinates bigger than 10
-                printf ("%3c ", ((COL-col) + '9' -3));
+            else if ((ROW-col)>10)  //for coordinates bigger than 10
+                printf ("%3c ", ((ROW-col) + '9' -3));
             else
-            printf ("%3d ", COL-col-1); //inverting coordinates from column number in array
+            printf ("%3d ", ROW-col-1); //inverting coordinates from column number in array
         }
-        else if (col==COL){     //for the x-coorfinates
+        else if (col==ROW){     //for the x-coorfinates
             if (row>9)     //for coordinates bigger than 10
                 printf ("%c ", (row + '9'-2));
             else
