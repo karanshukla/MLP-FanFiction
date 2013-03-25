@@ -3,7 +3,7 @@
 #include <time.h>
 #include <stdlib.h>
 	
-	int main (void) //heres a test main function just so we can get this bad boy compiling
+int main (void) //heres a test main function just so we can get this bad boy compiling
 	{
 		
 		printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
