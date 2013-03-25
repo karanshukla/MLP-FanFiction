@@ -2,6 +2,33 @@
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
+	
+	int main (void) //heres a test main function just so we can get this bad boy compiling
+	{
+		
+		printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
+		char choice = getchar();
+		if (choice != '\n')
+			return -2; //error code for Program Termination
+		int row = RowDefine(row);
+		printf("\nYou have entered %d rows. Press enter to continue:", row);
+	
+		return 0;
+			
+	}
+	
+	int RowDefine (int r)
+	{
+	r = -1;
+		do
+		{
+			printf("Enter the amount of rows you want. Note that this program will live forever until you do!:");
+			scanf("%d", &r);
+		}
+		while (r < 0 || r > 37);
+	return r;
+	}
+
 
 FILE* logfile; //LogFile Part
 void file (void)
