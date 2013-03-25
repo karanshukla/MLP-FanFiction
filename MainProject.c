@@ -3,17 +3,22 @@
 #include <time.h>
 #include <stdlib.h>
 
-FILE* logfile; //LogFile Part
+//FILE* logfile; //LogFile Part
 
 int main (void) //heres a test main function just so we can get this bad boy compiling
 {
 	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
 	char choice = getchar();
 	if (choice != '\n')
-	return -2; //error code for Program Termination
+		return -2; //error code for Program Termination
 	//file(); We'll add this later!
 	int row = RowDefine(row); 
-	printf("\nYou have entered %d rows. Press enter to continue:", row);
+	printf("\nYou have entered %d rows. Press enter to continue, anything else to quit:", row);
+	char choice2 = getchar();
+	if (choice2 != '\n')
+		return -2; //error code for Program Termination
+	int colm = ColDefine(colm);
+	//file(); We'll add this later!
 	
 	return 0;
 			
@@ -29,6 +34,18 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		}
 		while (r < 0 || r > 37);
 	return r;
+}
+
+int ColDefine (int c)
+{
+	c = -1;
+	do
+		{
+			printf("Enter the amount of column you want. Note that this program will live forever until you do!:");
+			scanf("%d", &c);
+		}
+		while (c < 0 || c > 37);
+	return c;
 }
 
 void file (void)
