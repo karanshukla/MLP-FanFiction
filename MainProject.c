@@ -7,14 +7,17 @@
 
 int main (void) //heres a test main function just so we can get this bad boy compiling
 {
+	char arr[36][36]={0};
+	int ROW,COL;
+	
 	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
 	char choice = getchar();
 	if (choice != '\n')
 		return -2; //error code for Program Termination
 	//file(); We'll add this later!
-	int row = RowDefine(row); 
-	printf("\nYou have entered %d rows.\n", row);
-	int colm = ColDefine(colm);
+	int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
+	printf("\nYou have entered %d rows.\n", ROW);
+	int COL = ColDefine(COL);
 	//file(); We'll add this later!
 	
 	return 0;
@@ -29,7 +32,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 			printf("Enter the amount of rows you want. Note that this program will live forever until you do!:");
 			scanf("%d", &r);
 		}
-		while (r < 0 || r > 37);
+		while (r < 1 || r > 36);	//need at least 1-36
 	return r;
 }
 
@@ -41,8 +44,8 @@ int ColDefine (int c)
 			printf("Enter the amount of column you want. Note that this program will live forever until you do!:");
 			scanf("%d", &c);
 		}
-		while (c < 0 || c > 37);
-	return c;
+		while (c < 1 || c > 36);	//again, 1-36
+		return c;
 }
 
 
