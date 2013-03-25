@@ -13,10 +13,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		return -2; //error code for Program Termination
 	//file(); We'll add this later!
 	int row = RowDefine(row); 
-	printf("\nYou have entered %d rows. Press enter to continue, anything else to quit:", row);
-	char choice2 = getchar();
-	if (choice2 != '\n')
-		return -2; //error code for Program Termination
+	printf("\nYou have entered %d rows.\n", row);
 	int colm = ColDefine(colm);
 	//file(); We'll add this later!
 	
@@ -47,6 +44,7 @@ int ColDefine (int c)
 		while (c < 0 || c > 37);
 	return c;
 }
+
 
 void file (void)
 {
