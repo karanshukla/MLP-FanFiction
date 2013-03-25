@@ -20,6 +20,14 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	int COL = ColDefine(COL);
 	//file(); We'll add this later!
 	
+	compileBoard (arr, ROW, COL);
+	
+	while (searchFunction){		//let searchFunction return true or false (1 or 0)
+	system(cls);	//I think this is to wipe the last board off the screen right?
+	printfBoard(arr, ROW, COL);
+	}
+
+	
 	return 0;
 			
 }
