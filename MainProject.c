@@ -17,14 +17,14 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		
 	//Asking if user wants to create own board, or use existing - may need editing? - Polly 
 	printf ("Would you like to create your own checkout board (Y/N)", board)
-	scanf ("%d", &board);
-	if (board = Y) { // this part is from the bottom
+	char board;
+	scanf ("%c", &board);
+	if (board == Y) { // this part is from the bottom
 		//file(); We'll add this later!
 		int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
 		printf("\nYou have entered %d rows.\n", ROW);
 		int COL = ColDefine(COL);
 		printf("You have entered %d columns,\n", COL)
-		//file(); We'll add this later!
 	
 	} else {
 		FILE *input; //based off of the input file specification in instructions
