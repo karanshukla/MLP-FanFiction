@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 //FILE* logfile; //LogFile Part
+//arr [rownum][colsnum]
 
 int main (void) //heres a test main function just so we can get this bad boy compiling
 {
@@ -170,14 +171,9 @@ int deleteArea(char given, int x, int y, char arr[][], int score){
     }
 }
 
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
-
 //These are the AI/Computer Play Functions.
 
-int RowPick (void)
+int RowPick (int row)
 {
     srand(time(NULL)); //ensure random number
 	int Rowpick = rand()%(ROW); //ROWS as defined by the function for grabbing the amount of rows
@@ -185,7 +181,7 @@ int RowPick (void)
 	return Rowpick;
 }
 
-int ColPick (void)
+int ColPick (int col)
 {
 		srand(time(NULL));
 		int Colpick = rand() % (COL);
