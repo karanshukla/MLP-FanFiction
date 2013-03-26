@@ -36,12 +36,6 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		printf("\n Filename invalid");
 		return -1;
 	}
-
-	//file(); We'll add this later!
-	int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
-	printf("\nYou have entered %d rows.\n", ROW);
-	int COL = ColDefine(COL);
-	//file(); We'll add this later!
 	
 	compileBoard (arr, ROW, COL);
 	
