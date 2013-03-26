@@ -19,18 +19,21 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	printf ("Would you like to create your own checkout board (Y/N)", board)
 	scanf ("%d", &board);
 	if (board = Y) {
-		printf ("How many rows and columns would you like the board to have (rows, columns)?", ROW, COL);
-		scanf ("%d, %d", &ROW, &COL);
+			//file(); We'll add this later!
+		int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
+		printf("\nYou have entered %d rows.\n", ROW);
+		int COL = ColDefine(COL);
+		printf("You have entered %d columns,\n", COL)
+		//file(); We'll add this later!
 	
 	} else {
-		printf ("You have decided to use an existing board.\n\nPlease select one of the three options:\n a)Small board (8X8)\n b)Medium Board (12X20)\n c)Large Board (36X36)", file);
-		scanf ("%d", file);
-		if (file == a);
-			file (); // Bussman said it reads from his user home directory "/Users/markusbussmann"
-		else if (file == b);
-			file ();
-		else (file == c);
-			file (); 
+		FILE *input; //based off of the input file specification in instructions
+		char filename[13];
+		printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
+		scanf("%s", filename);
+		if ((input = fopen(filename, "r")) == NULL) {
+		printf("\n Filename invalid");
+		return -1;
 	}
 
 	//file(); We'll add this later!
@@ -42,8 +45,12 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	compileBoard (arr, ROW, COL);
 	
 	while (searchFunction){		//let searchFunction return true or false (1 or 0)
-	system(cls);	//I think this is to wipe the last board off the screen right?
+	system(cls);	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly 
 	printfBoard(arr, ROW, COL);
+	
+	coordSelect (x, y); // asks the user to pick coordinates
+	
+
 	}
 
 	
@@ -56,7 +63,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	r = -1;
 		do
 		{
-			printf("Enter the amount of rows you want. Note that this program will live forever until you do!:");
+			printf("Enter the number of rows you'd like. Note that this program will live forever until you do!:");
 			scanf("%d", &r);
 		}
 		while (r < 1 || r > 36);	//need at least 1-36
@@ -68,14 +75,19 @@ int ColDefine (int c)
 	c = -1;
 	do
 		{
-			printf("Enter the amount of column you want. Note that this program will live forever until you do!:");
+			printf("Enter the number of columns you'd like. Note that this program will live forever until you do!:");
 			scanf("%d", &c);
 		}
 		while (c < 1 || c > 36);	//again, 1-36
 		return c;
 }
 
-
+int coordSelect (x,y) 
+{
+	printf ("Please enter a set of coordinates that is adjacent to at least one other same cart (row, column):",x,y);
+	
+	
+}
 void file (void)
 {
     logfile = fopen("log.txt", "w");
