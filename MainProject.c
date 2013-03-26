@@ -18,8 +18,8 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	//Asking if user wants to create own board, or use existing - may need editing? - Polly 
 	printf ("Would you like to create your own checkout board (Y/N)", board)
 	scanf ("%d", &board);
-	if (board = Y) {
-			//file(); We'll add this later!
+	if (board = Y) { // this part is from the bottom
+		//file(); We'll add this later!
 		int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
 		printf("\nYou have entered %d rows.\n", ROW);
 		int COL = ColDefine(COL);
@@ -82,12 +82,15 @@ int ColDefine (int c)
 		return c;
 }
 
-int coordSelect (x,y) 
+int coordSelect (x,y) // will continue to ask user for coord until it gets one within board and playable
 {
-	printf ("Please enter a set of coordinates that is adjacent to at least one other same cart (row, column):",x,y);
-	
-	
+	do {
+		printf ("Please enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):",x,y);
+		scanf ("%d, %d", &x, &y);
+	} while (x < 0 || x > 36 || y <0 || y > 36); // will also need to check whether adjacent to one other cart!
+	return (x,y);	
 }
+
 void file (void)
 {
     logfile = fopen("log.txt", "w");
@@ -105,7 +108,7 @@ else if (num==4)    colour = 'g';
 return colour;
 }
 
-void compileBoard (char arr[][36], int ROW, int COL){	//editted Rachel's original one
+void compileBoard (char arr[][36], int ROW, int COL){	//edited Rachel's original one
 
 int i, j;
 srand ((unsigned)time(NULL));
