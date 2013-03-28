@@ -3,7 +3,6 @@
 #include <time.h>
 #include <stdlib.h>
 
-//FILE* logfile; //LogFile Part
 //arr [rownum][colsnum]
 
 //functions
