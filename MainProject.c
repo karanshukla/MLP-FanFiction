@@ -1,4 +1,4 @@
-#include <stdio.h>
+	#include <stdio.h>
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
@@ -24,15 +24,15 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		return -2; //error code for Program Termination
 		
 	//Asking if user wants to create own board, or use existing - may need editing? - Polly 
-	printf ("Would you like to create your own checkout board (Y/N)")
+	printf ("Would you like to create your own checkout board (Y/N)");
 	char board;
 	scanf ("%c", &board);
-	if (board == Y) { // this part is from the bottom
+	if (board == 'Y') { // this part is from the bottom
 		//file(); We'll add this later!
 		int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
 		printf("\nYou have entered %d rows.\n", ROW);
 		int COL = ColDefine(COL);
-		printf("You have entered %d columns,\n", COL)
+		printf("You have entered %d columns,\n", COL);	
 	
 	} else {
 		FILE *input; //based off of the input file specification in instructions
@@ -47,7 +47,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	compileBoard (arr, ROW, COL);
 	
 	while (searchFunction){		//let searchFunction return true or false (1 or 0)
-	system(cls);	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly 
+	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly 
 	printfBoard(arr, ROW, COL);
 	
 	coordSelect (x, y); // asks the user to pick coordinates
@@ -95,6 +95,7 @@ int coordSelect (x,y) // will continue to ask user for coord until it gets one w
 
 void file (void)
 {
+    FILE*logfile;
     logfile = fopen("log.txt", "w");
     fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nYung-Hsiang Chih 999751148"); //Student Numbers
     fclose(logfile);
