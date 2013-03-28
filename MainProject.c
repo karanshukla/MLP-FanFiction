@@ -242,16 +242,4 @@ int ColPick (int col)
 		return Colpick;
 }
 
-int SearchMove (arr[ROW][COL], int ROW, int COL) //looks to see if there are any moves left
-{
-	int i;
-	int j;
-	char dummy;
-	for (i = 0; i < ROW; i++);
-	{
-		for (j = 0; j < COL; j++);
-			{
-					//something
-			}
-	}
-}
+
