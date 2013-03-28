@@ -85,6 +85,7 @@ int ColDefine (int c)
 
 int coordSelect (void) // will continue to ask user for coord until it gets one within board and playable
 {
+	int x, y;
 	do {
 		printf ("Please enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):",x,y);
 		scanf ("%d, %d", &x, &y);
@@ -228,7 +229,7 @@ int deleteArea(char given, int x, int y, char arr[][], int score){
 
 int RowPick (int row)
 {
-    srand(time(NULL)); //ensure random number
+    srand((unsigned)time(NULL)); //ensure random number
 	int Rowpick = rand()%(ROW); //ROWS as defined by the function for grabbing the amount of rows
 	printf("I pick row %d", Rowpick);
 	return Rowpick;
@@ -236,7 +237,7 @@ int RowPick (int row)
 
 int ColPick (int col)
 {
-		srand(time(NULL));
+		srand((unsigned)time(NULL));
 		int Colpick = rand() % (COL);
 		printf("I pick row %d", Colpick);
 		return Colpick;
