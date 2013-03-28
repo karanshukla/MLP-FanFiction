@@ -37,7 +37,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		FILE *input; //based off of the input file specification in instructions
 		char filename[13];
 		printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
-		scanf("%s", filename);
+		scanf("%s", filename); //did we really want to scanf a string? Why not use a while loop and getchar?
 		if ((input = fopen(filename, "r")) == NULL) {
 		printf("\n Filename invalid");
 		return -1;
@@ -49,7 +49,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly 
 	printfBoard(arr, ROW, COL);
 	
-	coordSelect (x, y); // asks the user to pick coordinates
+	coordSelect(void); // asks the user to pick coordinates
 	
 
 	}
@@ -83,7 +83,7 @@ int ColDefine (int c)
 		return c;
 }
 
-int coordSelect (x,y) // will continue to ask user for coord until it gets one within board and playable
+int coordSelect (void) // will continue to ask user for coord until it gets one within board and playable
 {
 	do {
 		printf ("Please enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):",x,y);
