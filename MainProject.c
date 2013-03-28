@@ -24,7 +24,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		return -2; //error code for Program Termination
 		
 	//Asking if user wants to create own board, or use existing - may need editing? - Polly 
-	printf ("Would you like to create your own checkout board (Y/N)", board)
+	printf ("Would you like to create your own checkout board (Y/N)")
 	char board;
 	scanf ("%c", &board);
 	if (board == Y) { // this part is from the bottom
