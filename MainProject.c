@@ -6,6 +6,13 @@
 //FILE* logfile; //LogFile Part
 //arr [rownum][colsnum]
 
+//functions
+char NumToColour(int num);
+void compileBoard (char arr[][36], int ROW, int COL);
+void printBoard (char arr[][36], int ROW, int COL);
+void dropDown(char arr[][36], int ROW, int COL);
+void shrinkSideways(char arr[][36], int ROW, int *COL);
+
 int main (void) //heres a test main function just so we can get this bad boy compiling
 {
 	char arr[36][36]={0};
