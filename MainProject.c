@@ -94,7 +94,7 @@ void file (void)
     return;
 }
 
-char NumToColour(int num){ //Board Generator Section
+char NumToColour(int num){
 char colour;
 if (num==1)    colour = 'r';
 else if (num==2)    colour = 'y';
@@ -103,7 +103,7 @@ else if (num==4)    colour = 'g';
 return colour;
 }
 
-void compileBoard (char arr[][36], int ROW, int COL){	//edited Rachel's original one
+void compileBoard (char arr[][36], int ROW, int COL){
 
 int i, j;
 srand ((unsigned)time(NULL));
@@ -119,7 +119,7 @@ void printBoard (char arr[][36], int ROW, int COL){
 
 int col, row;   //row and col are inverted because of some weird logic going on here
 
-for (col=0; col<ROW+1; col++){
+for (col=0; col<=ROW; col++){
     for (row=-1; row<COL; row++){
         if (row==-1){        //for y-coordinates
             if (col==ROW)       //for the bottom left corner space
@@ -135,12 +135,64 @@ for (col=0; col<ROW+1; col++){
             else
             printf ("%d ", row);
         }
+        else{
+		if (arr[col][row]==0)
+			printf("  ");
         else
-        printf ("%c ", arr[col][row]);
+        printf ("%c ", arr[col][row]);}
     }
 printf ("\n");
 }
+return;
 }
+
+void dropDown(char arr[][36], int ROW, int COL){
+int i, j, marker, zero, test;
+
+for (j=0;j<COL;j++){	//let the reign of terror begin!
+
+for (i=(ROW-1), zero=0, marker=0;i>=0;i--){
+
+if (arr[i][j]==0){
+	if (zero==0){
+		marker=i;
+		}
+	zero++;
+	}	//end marking the places of spaces
+
+//printf ("column %d: zero is %d, marker is %d\n", j, zero, marker);
+	
+}	//end of down to up sweep
+
+if (zero>0){	//once upon a time...when there are spaces in the middle of arrays...
+//	printf("I'm gonna start dropping dat bass.\n");
+	for (test=(marker-zero);test>=0;test--,marker--){
+        arr[marker][j]=arr[test][j]; //replace spaces with numbers from above
+        arr[test][j]=0;    //replace numbers from above with 0
+	}	//end bass dropping
+}	//
+}	//end of left to right sweep
+return;}
+
+void shrinkSideways(char arr[][36], int ROW, int *COL){
+int i, j, cave, marker=0,test;
+
+for (j=0, cave=0;j<*COL;j++){
+if (arr[ROW-1][j]==0){
+	if (cave==0)
+		marker=j;
+	cave++;
+	}
+}	//end looking for caves
+
+for (test=(marker+cave);test<*COL;test++,marker++){
+	for (i=0;i<ROW;i++){
+		arr[i][marker]=arr[i][test];
+	}
+}	//end shrinking the damn thing
+
+*COL-=cave;	//DIE!!!!!
+return;}
 
 int deleteAreaCheck(int x, int y, char arr){
     int score=0
