@@ -156,7 +156,7 @@ printf ("\n");
 return;
 }
 
-//this function drops the letters down to fill the spaces, I call it dropping the bass
+//this function drops the letters down to fill the spaces, I call it dropping the bass DROP THA BASS
 void dropDown(char arr[][36], int ROW, int COL){
 int i, j, marker, zero, test;
 
