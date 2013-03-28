@@ -101,6 +101,7 @@ void file (void)
     return;
 }
 
+//this function takes random int's 1-4 and convert them to char's
 char NumToColour(int num){
 char colour;
 if (num==1)    colour = 'r';
@@ -110,19 +111,21 @@ else if (num==4)    colour = 'g';
 return colour;
 }
 
+//this function randomly generates board according to user defined size
 void compileBoard (char arr[][36], int ROW, int COL){
 
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
     for (j=0;j<COL;j++){
-        arr[i][j]=NumToColour(rand()%4+1);
+        arr[i][j]=NumToColour(rand()%4+1);	//NumToColour sends back chars to be written into array
     }
 }
 return;
 }
 
 void printBoard (char arr[][36], int ROW, int COL){
+//most of the code is writing coordinates
 
 int col, row;   //row and col are inverted because of some weird logic going on here
 
@@ -131,48 +134,46 @@ for (col=0; col<=ROW; col++){
         if (row==-1){        //for y-coordinates
             if (col==ROW)       //for the bottom left corner space
                 printf ("    ");
-            else if ((ROW-col)>10)  //for coordinates bigger than 10
+            else if ((ROW-col)>10)  //for coordinates bigger than 10, writes alphabet coordinates
                 printf ("%3c ", ((ROW-col) + '9' -3));
             else
-            printf ("%3d ", ROW-col-1); //inverting coordinates from column number in array
+            printf ("%3d ", ROW-col-1); //y-number coordinates here
         }
         else if (col==ROW){     //for the x-coorfinates
-            if (row>9)     //for coordinates bigger than 10
+            if (row>9)     //for coordinates bigger than 10, writes alphabet coordinates
                 printf ("%c ", (row + '9'-2));
             else
-            printf ("%d ", row);
+            printf ("%d ", row);	//x-number coordinates here
         }
         else{
 		if (arr[col][row]==0)
-			printf("  ");
+			printf("  ");	//prints spaces when encountering 0's
         else
-        printf ("%c ", arr[col][row]);}
+        printf ("%c ", arr[col][row]);}		//this actually prints the board
     }
 printf ("\n");
 }
 return;
 }
 
+//this function drops the letters down to fill the spaces, I call it dropping the bass
 void dropDown(char arr[][36], int ROW, int COL){
 int i, j, marker, zero, test;
 
-for (j=0;j<COL;j++){	//let the reign of terror begin!
+for (j=0;j<COL;j++){	//"sweeps" from left to right, column by column
 
-for (i=(ROW-1), zero=0, marker=0;i>=0;i--){
+for (i=(ROW-1), zero=0, marker=0;i>=0;i--){	//goes from bottom to top
 
 if (arr[i][j]==0){
 	if (zero==0){
-		marker=i;
+		marker=i;	//marks the first space
 		}
-	zero++;
+	zero++;	//how many spaces
 	}	//end marking the places of spaces
-
-//printf ("column %d: zero is %d, marker is %d\n", j, zero, marker);
 	
 }	//end of down to up sweep
 
 if (zero>0){	//once upon a time...when there are spaces in the middle of arrays...
-//	printf("I'm gonna start dropping dat bass.\n");
 	for (test=(marker-zero);test>=0;test--,marker--){
         arr[marker][j]=arr[test][j]; //replace spaces with numbers from above
         arr[test][j]=0;    //replace numbers from above with 0
@@ -181,24 +182,25 @@ if (zero>0){	//once upon a time...when there are spaces in the middle of arrays.
 }	//end of left to right sweep
 return;}
 
+//this function collapses columns
 void shrinkSideways(char arr[][36], int ROW, int *COL){
 int i, j, cave, marker=0,test;
 
-for (j=0, cave=0;j<*COL;j++){
-if (arr[ROW-1][j]==0){
+for (j=0, cave=0;j<*COL;j++){	//sweeping from left to right
+if (arr[ROW-1][j]==0){	//checks bottom number of column to see if column is empty
 	if (cave==0)
-		marker=j;
-	cave++;
+		marker=j;	//marks first space
+	cave++;		//num of spaces
 	}
 }	//end looking for caves
 
 for (test=(marker+cave);test<*COL;test++,marker++){
 	for (i=0;i<ROW;i++){
-		arr[i][marker]=arr[i][test];
+		arr[i][marker]=arr[i][test];	//overwriting
 	}
 }	//end shrinking the damn thing
 
-*COL-=cave;	//DIE!!!!!
+*COL-=cave;	//DIE!!!!!(shrinkage of array)
 return;}
 
 int deleteAreaCheck(int x, int y, char arr){
