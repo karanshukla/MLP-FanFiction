@@ -203,8 +203,8 @@ for (test=(marker+cave);test<*COL;test++,marker++){
 return;}
 
 int deleteAreaCheck(int x, int y, char arr){
-    int score=0
-    char given=arr[x][y];
+    int score=0;
+    char given = arr[x][y];
     if(arr[x+1][y]==given ||arr[x-1][y]==given ||arr[x][y+1]==given ||arr[x][y-1]==given){
         score=deleteArea(given, x, y, arr,0);
     }
@@ -213,7 +213,7 @@ int deleteAreaCheck(int x, int y, char arr){
 int deleteArea(char given, int x, int y, char arr[][], int score){
     if(arr[x][y]==given){
         arr[x][y]='0';
-        score+=1// check to see if this is the right way to calculate the score.
+        score+=1;// check to see if this is the right way to calculate the score.
         score+=deleteArea(given, x+1, y, arr);
         score+=deleteArea(given, x-1, y, arr);
         score+=deleteArea(given, x, y+1, arr);
@@ -221,7 +221,7 @@ int deleteArea(char given, int x, int y, char arr[][], int score){
         return score;
     }
     else{
-        return 0
+        return 0;
     }
 }
 
