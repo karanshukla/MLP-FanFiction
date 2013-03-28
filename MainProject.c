@@ -45,10 +45,9 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	
 	compileBoard (arr, ROW, COL);
 	
-	while (searchFunction){		//let searchFunction return true or false (1 or 0)
+	while (searchFunction){		//let searchFunction return true or false (1 or 0) um is this to check if there are moves left?
 	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly 
 	printfBoard(arr, ROW, COL);
-	
 	coordSelect(void); // asks the user to pick coordinates
 	
 
