@@ -50,7 +50,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	printfBoard(arr, ROW, COL);
 	coordSelect(void); // asks the user to pick coordinates
 	
-	check_fn(void);//checks if the coordinate the user picks is valid and then changes them to zero. still in the works! -Polly 
+	checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. still in the works! -Polly 
 
 	}
 
@@ -93,7 +93,7 @@ int coordSelect (void) // will continue to ask user for coord until it gets one 
 	return (x,y);	
 }
 
-void check_fn (char board[ROW][COL], int x, int  y) { // I'm still working on this function - Polly
+void checCoord (char board[ROW][COL], int x, int  y) { // I'm still working on this function - Polly
     int i, j;
     
     board[x][y] = 'X';
