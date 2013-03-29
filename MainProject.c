@@ -6,6 +6,10 @@
 //arr [rownum][colsnum]
 
 //functions
+
+FILE*logfile; //Global Pointer
+logfile = fopen("log.txt", "w");
+    fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nYung-Hsiang Chih 999751148"); //Student Numbers
 char NumToColour(int num);
 void compileBoard (char arr[][36], int ROW, int COL);
 void printBoard (char arr[][36], int ROW, int COL);
@@ -92,6 +96,7 @@ int coordSelect (void) // will continue to ask user for coord until it gets one 
 	do {
 		printf ("Please enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):",x,y);
 		scanf ("%d, %d", &x, &y);
+		fprintf(logfile,"%d, %d", &x, &y);
 	} while (x < 0 || x > 36 || y <0 || y > 36); // will also need to check whether adjacent to one other cart!
 	return (x,y);	
 }
@@ -108,7 +113,7 @@ void checCoord (char board[ROW][COL], int x, int  y) { // I'm still working on t
     }
 } 
 
-void file (void)
+void file (void) //may be deleted in favour of having a global log file
 {
     FILE*logfile;
     logfile = fopen("log.txt", "w");
@@ -134,7 +139,8 @@ int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
     for (j=0;j<COL;j++){
-        arr[i][j]=NumToColour(rand()%4+1);	//NumToColour sends back chars to be written into array
+        arr[i][j]=NumToColour(rand()%4+1); //NumToColour sends back chars to be written into array
+        fprintf(logfile, "%c", array[i][j]);
     }
 }
 return;
