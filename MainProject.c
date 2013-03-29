@@ -16,13 +16,13 @@ void printBoard (char arr[][36], int ROW, int COL);
 void dropDown(char arr[][36], int ROW, int COL);
 void shrinkSideways(char arr[][36], int ROW, int *COL); //What are these doing here? Are they just initialising something?
 
-int main (void) //heres a test main function just so we can get this bad boy compiling
+int main (void) //MAIN!
 {
 	char arr[36][36]={0};
 	int ROW,COL;
 	
 	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
-	char choice = getchar();
+	char choice = getchar(); //menu choice
 	if (choice != '\n')
 		return -2; //error code for Program Termination
 		
@@ -46,9 +46,9 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	
 	compileBoard (arr, ROW, COL);
 	
-	while (SearchMove) //I just created this down the bottom. 2 loops. ~ Karan
+	while (SearchMove) //I think Rachel already made a function for this?
 	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly 
-	printfBoard(arr, ROW, COL);
+	printfBoard(arr, ROW, COL); //unfortunately the system("cls") will only work in WinBlows
 	coordSelect(void); // asks the user to pick coordinates
 	
 	checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. still in the works! -Polly 
