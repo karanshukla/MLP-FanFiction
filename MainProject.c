@@ -260,7 +260,7 @@ int ColPick (int col)
 		return Colpick;
 }
 
-int FileBoard (void)
+int FileBoard (void) //this will ready the numbers/characters off the file
 {
 	FILE *input; //based off of the input file specification in instructions
 	char filename[13];
@@ -273,7 +273,7 @@ int FileBoard (void)
 	else
 	input = fopen("%s", "r", filename);
 	int b;
-	while (fscanf(input, "%d", &b) != EOF)
+	while (fscanf(input, "%d", &b) != EOF) //loop for getting them.
 	{
 		fscanf(input, "%d", &b);
 		return b;
