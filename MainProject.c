@@ -22,18 +22,18 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	if (choice != '\n')
 		return -2; //error code for Program Termination
 		
-	//Asking if user wants to create own board, or use existing - may need editing? - Polly 
-	printf ("Would you like to create your own checkout board (Y/N)");
+	//Asking if user wants to create own board, or use existing - may need editing? - Polly On it - Karz
+	printf ("\nType '1' to start a new game, type '2' to load an existing file. Anything else to exit.");
 	char board;
 	scanf ("%c", &board);
-	if (board == 'Y') { // this part is from the bottom
+	if (board == '1') { // this part is from the bottom
 		//file(); We'll add this later!
 		int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
 		printf("\nYou have entered %d rows.\n", ROW);
 		int COL = ColDefine(COL);
 		printf("You have entered %d columns,\n", COL);	
 	
-	} else {
+	} else if (board == '2'){
 		FILE *input; //based off of the input file specification in instructions
 		char filename[13];
 		printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
@@ -42,6 +42,9 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		printf("\n Filename invalid");
 		return -1;
 	}
+
+	else 
+		return -2;
 	
 	compileBoard (arr, ROW, COL);
 	
