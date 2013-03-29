@@ -14,7 +14,7 @@ char NumToColour(int num);
 void compileBoard (char arr[][36], int ROW, int COL);
 void printBoard (char arr[][36], int ROW, int COL);
 void dropDown(char arr[][36], int ROW, int COL);
-void shrinkSideways(char arr[][36], int ROW, int *COL);
+void shrinkSideways(char arr[][36], int ROW, int *COL); //What are these doing here? Are they just initialising something?
 
 int main (void) //heres a test main function just so we can get this bad boy compiling
 {
