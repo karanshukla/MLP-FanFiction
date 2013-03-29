@@ -26,7 +26,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 	if (choice != '\n')
 		return -2; //error code for Program Termination
 		
-	//Asking if user wants to create own board, or use existing - may need editing? - Polly On it - Karz
+	//Asking if user wants to create own board I did it! return values are really random though.
 	printf ("\nType '1' to start a new game, type '2' to load an existing file. Anything else to exit.");
 	char board;
 	scanf ("%c", &board);
