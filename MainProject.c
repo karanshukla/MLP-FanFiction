@@ -38,7 +38,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		printf("You have entered %d columns,\n", COL);	
 	
 	} else if (board == '2'){
-		Printboard(void); //look below for this function
+		FileBoard(void); //look below for this function
 	}
 
 	else 
@@ -140,8 +140,7 @@ for (i=0;i<ROW;i++){
 return;
 }
 
-void printBoard (char arr[][36], int ROW, int COL){
-//most of the code is writing coordinates
+void printBoard (char arr[][36], int ROW, int COL){ //most of the code is writing coordinates
 
 int col, row;   //row and col are inverted because of some weird logic going on here
 
