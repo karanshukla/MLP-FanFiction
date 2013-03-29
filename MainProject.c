@@ -38,13 +38,7 @@ int main (void) //heres a test main function just so we can get this bad boy com
 		printf("You have entered %d columns,\n", COL);	
 	
 	} else if (board == '2'){
-		FILE *input; //based off of the input file specification in instructions
-		char filename[13];
-		printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
-		scanf("%s", filename); //did we really want to scanf a string? Why not use a while loop and getchar?
-		if ((input = fopen(filename, "r")) == NULL) {
-		printf("\n Filename invalid");
-		return -1;
+		Printboard(void); //look below for this function
 	}
 
 	else 
@@ -266,4 +260,22 @@ int ColPick (int col)
 		return Colpick;
 }
 
-
+int FileBoard (void)
+{
+	FILE *input; //based off of the input file specification in instructions
+	char filename[13];
+	printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
+	scanf("%s", filename); //did we really want to scanf a string? Why not use a while loop and getchar?
+	if ((input = fopen(filename, "r")) == NULL) {
+	printf("\n Filename invalid");
+	return -1;
+	}
+	else
+	input = fopen("%s", "r", filename);
+	int b;
+	while (fscanf(input, "%d", &b) != EOF)
+	{
+		fscanf(input, "%d", &b);
+		return b;
+	}
+}
