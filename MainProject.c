@@ -95,15 +95,25 @@ int coordSelect (void) // will continue to ask user for coord until it gets one 
 	return (x,y);	
 }
 
-void checCoord (char board[ROW][COL], int x, int  y) { // I'm still working on this function - Polly
-    int i, j;
+void checkCoord (x, y, board, colour_of_user_chosen_cell ) { // I'm still working on this function - Polly
+    if (board[x+1][y] == chosen_colour && [x+1][y] = inside play) {
+    	board[x+1][y] = 0;
+    	checkCoord(x+1, y, board, colour_of_user_chosen_cell);
+    }
     
-    board[x][y] = 'X';
+    if (board[x-1][y] == chosen_colour && [x-1][y] = inside play) {
+    	board [x-1][y] = 0;
+    	checkCoord(x-1, y, board, colour_of_user_chosen_cell);
+    }
     
-    for (i=-1;i<2;i++) {
-        for (j=-1;j<2;j++){
-            if ((x+i, y+j)== 'X');
-        }
+    if (board[x][y+1] == chosen_colour && [x][y+1] = inside play) {
+    	board [x][y+1] = 0;
+    	checkCoord(x, y+1, board, colour_of_user_chosen_cell);
+    }
+    
+    if (board[x][y-1] == chosen_colour && [x][y-1] = inside play) {
+    	board [x][y-1] = 0;
+    	checkCoord(x, y-1, board, colour_of_user_chosen_cell);
     }
 } 
 
