@@ -95,25 +95,22 @@ int coordSelect (void) // will continue to ask user for coord until it gets one 
 	return (x,y);	
 }
 
-void checkCoord (x, y, board, colour_of_user_chosen_cell, ROW, COL ) { // I'm still working on this function - Polly
-    if (board[x+1][y] == chosen_colour && (x+1) <= ROW) { // checks the grids to the left of the selected grid
-    	board[x+1][y] = 0;
-    	checkCoord(x+1, y, board, colour_of_user_chosen_cell);
+void checkCoord (x, y, board, ROW, COL ) {// I'm still working on this function - Polly
+  
+    if (board[x+1][y] == board[x][y] && (x+1) < COL && y < ROW[x+1] ) { // checks the grids to the left of the selected grid
+    	checkCoord(x+1, y, board);
     }
     
-    if (board[x-1][y] == chosen_colour && (x-1) <= ROW && (x-1) >= o) { // checks the grids to the right of the selected grid
-    	board [x-1][y] = 0;
-    	checkCoord(x-1, y, board, colour_of_user_chosen_cell);
+    if (board[x-1][y] == board[x][y] && (x-1) > 0 && (x-1) >= o) { // checks the grids to the right of the selected grid
+    	checkCoord(x-1, y, board);
     }
     
-    if (board[x][y+1] == chosen_colour && (y+1) <= COL) { //checks the grids above the selected grid
-    	board [x][y+1] = 0;
-    	checkCoord(x, y+1, board, colour_of_user_chosen_cell);
+    if (board[x][y+1] == board[x][y] && (y+1) <= COL) { //checks the grids above the selected grid
+    	checkCoord(x, y+1, board);
     }
     
-    if (board[x][y-1] == chosen_colour && (y-1) <= COL && (y-1) >= 0) { // checks the grids below the selected grid
-    	board [x][y-1] = 0;
-    	checkCoord(x, y-1, board, colour_of_user_chosen_cell);
+    if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { // checks the grids below the selected grid
+    	checkCoord(x, y-1, board);
     }
     
     board[x][y]=0;
