@@ -10,12 +10,13 @@
 FILE*logfile; //Global Pointer
 logfile = fopen("log.txt", "w");
     fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nYung-Hsiang Chih 999751148"); //Student Numbers
-char NumToColour(int num);
-void compileBoard (char arr[][36], int ROW, int COL);
 void printBoard (char arr[][36], int ROW, int COL);
 void dropDown(char arr[][36], int ROW, int COL);
 void shrinkSideways(char arr[][36], int ROW, int *COL); //What are these doing here? Are they just initialising something?
-
+void compileBoard(int rows, int cols, char array[][36]);//compiles the board
+int deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
+int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by programn
+char NumToColour(int num);//given a number it changes to a char representing a color
 int main (void) //MAIN!
 {
 	char arr[36][36]={0};
@@ -227,28 +228,6 @@ for (test=(marker+cave);test<*COL;test++,marker++){
 *COL-=cave;	//DIE!!!!!(shrinkage of array)
 return;}
 
-int deleteAreaCheck(int x, int y, char arr){
-    int score=0;
-    char given = arr[x][y];
-    if(arr[x+1][y]==given ||arr[x-1][y]==given ||arr[x][y+1]==given ||arr[x][y-1]==given){
-        score=deleteArea(given, x, y, arr,0);
-    }
-    return score;
-}
-int deleteArea(char given, int x, int y, char arr[][], int score){
-    if(arr[x][y]==given){
-        arr[x][y]='0';
-        score+=1;// check to see if this is the right way to calculate the score.
-        score+=deleteArea(given, x+1, y, arr);
-        score+=deleteArea(given, x-1, y, arr);
-        score+=deleteArea(given, x, y+1, arr);
-        score+=deleteArea(given, x, y-1, arr);
-        return score;
-    }
-    else{
-        return 0;
-    }
-}
 
 //These are the AI/Computer Play Functions.
 
@@ -287,3 +266,66 @@ int FileBoard (void) //this will ready the numbers/characters off the file
 		return b;
 	}
 }
+
+char NumToColour(int num){ //this takes a number from 1 to 4 and replaces it with  a character representing a color
+char colour;
+if (num==1)    colour = 'r';//rech
+else if (num==2)    colour = 'y';//yellow
+else if (num==3)    colour = 'b';//blue
+else if (num==4)    colour = 'g';//green
+return colour;
+}
+
+void compileBoard(int rows, int cols, char arr[][36]){/* this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
+                                         it takes as paramers the row and colom size
+                                         the character array corisponds to a color.*/
+    int i,j, temp;
+    srand((unsigned)time(NULL));
+    for(i=0;i<rows;i++){
+        for(j=0;j<cols;j++){
+            temp=rand()%4+1;
+            arr[i][j]=NumToColour(temp);
+            }
+
+        }
+    return;
+}
+int deleteAreaCheck(int rows, int cols, char arr[][36]){/// this checks if it a valid move adn returns the score for the move
+    int score=0;
+    char given=arr[rows][cols];
+    if(arr[rows+1][cols]==given || arr[rows][cols+1]==given || arr[rows-1][cols]==given || arr[rows][cols-1]==given){
+        score=deleteArea(given, rows, cols, arr,0);
+    }
+
+    return score*score;
+}
+int deleteArea(char given, int x, int y, char arr[][36], int score){//this is a recursive function replaces same characters that are touching with a zero
+//returns the number of characters deleted
+    if(arr[x][y]==given){
+        arr[x][y]='0'; //if the given char (the one that was selected by the user) is the same as a the new spot given then it is replaced by a zeor
+        //moveing out to the right and left, up and down
+        score+=deleteArea(given, x+1, y, arr, score+1); //returns a score if it runs into the same character
+        score+=deleteArea(given, x-1, y, arr, score+1);
+        score+=deleteArea(given, x, y+1, arr, score+1);
+        score+=deleteArea(given, x, y-1, arr, score+1);
+        return score;
+    }
+    return 0;
+}
+/*--- thus is Rachel Baker's print board--- keep it as a refference?
+void printBoard(int rows, int cols, char arr[][36]){
+    int i, j;
+    for (i=0; i<rows; i++){
+            printf("%-2d",rows-i-1);
+            for (j=0;j<cols;j++){
+                printf("%2c", arr[i][j]);
+            }
+        printf ("\n");
+    }
+    printf("\n   ");
+    for(i=0;i<cols;i++){
+        printf("%-2d", i);
+    }
+    return;
+}
+*/
