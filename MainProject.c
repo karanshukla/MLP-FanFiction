@@ -95,26 +95,28 @@ int coordSelect (void) // will continue to ask user for coord until it gets one 
 	return (x,y);	
 }
 
-void checkCoord (x, y, board, colour_of_user_chosen_cell ) { // I'm still working on this function - Polly
-    if (board[x+1][y] == chosen_colour && [x+1][y] = inside play) {
+void checkCoord (x, y, board, colour_of_user_chosen_cell, ROW, COL ) { // I'm still working on this function - Polly
+    if (board[x+1][y] == chosen_colour && (x+1) <= ROW) {
     	board[x+1][y] = 0;
     	checkCoord(x+1, y, board, colour_of_user_chosen_cell);
     }
     
-    if (board[x-1][y] == chosen_colour && [x-1][y] = inside play) {
+    if (board[x-1][y] == chosen_colour && (x-1) <= ROW && (x-1) >= o) {
     	board [x-1][y] = 0;
     	checkCoord(x-1, y, board, colour_of_user_chosen_cell);
     }
     
-    if (board[x][y+1] == chosen_colour && [x][y+1] = inside play) {
+    if (board[x][y+1] == chosen_colour && (y+1) <= COL) {
     	board [x][y+1] = 0;
     	checkCoord(x, y+1, board, colour_of_user_chosen_cell);
     }
     
-    if (board[x][y-1] == chosen_colour && [x][y-1] = inside play) {
+    if (board[x][y-1] == chosen_colour && (y-1) <= COL && (y-1) >= 0) {
     	board [x][y-1] = 0;
     	checkCoord(x, y-1, board, colour_of_user_chosen_cell);
     }
+    
+    board[x][y]=0;
 } 
 
 void file (void) //may be deleted in favour of having a global log file
