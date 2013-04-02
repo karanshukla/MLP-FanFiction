@@ -69,10 +69,61 @@ printf ("\n");
 }
 return;
 }
-void dropDown(char arr[][36], int ROW, int COL);
-void shrinkSideways(char arr[][36], int ROW, int *COL); //What are these doing here? Are they just initialising something?
-//this function randomly generates board according to user defined size
-void compileBoard (char arr[][36], int ROW, int COL){
+//this function drops the letters down to fill the spaces, I call it dropping the bass DROP THA BASS
+void dropDown(char arr[][36], int ROW, int COL){
+int i, j, marker, zero, test;
+
+for (j=0;j<COL;j++){	//"sweeps" from left to right, column by column
+
+for (i=(ROW-1), zero=0, marker=0;i>=0;i--){	//goes from bottom to top
+
+if (arr[i][j]==0){
+	if (zero==0){
+		marker=i;	//marks the first space
+		}
+	zero++;	//how many spaces
+	}	//end marking the places of spaces
+	
+}	//end of down to up sweep
+
+if (zero>0){	//once upon a time...when there are spaces in the middle of arrays...
+	for (test=(marker-zero);test>=0;test--,marker--){
+        arr[marker][j]=arr[test][j]; //replace spaces with numbers from above
+        arr[test][j]=0;    //replace numbers from above with 0
+	}	//end bass dropping
+}	//
+}	//end of left to right sweep
+return;}
+void shrinkSideways(char arr[][36], int ROW, int *COL){
+int i, j, cave, marker=0,test;
+
+for (j=0, cave=0;j<*COL;j++){	//sweeping from left to right
+if (arr[ROW-1][j]==0){	//checks bottom number of column to see if column is empty
+	if (cave==0)
+		marker=j;	//marks first space
+	cave++;		//num of spaces
+	}
+}	//end looking for caves
+
+for (test=(marker+cave);test<*COL;test++,marker++){
+	for (i=0;i<ROW;i++){
+		arr[i][marker]=arr[i][test];	//overwriting
+	}
+}	//end shrinking the damn thing
+
+*COL-=cave;	//DIE!!!!!(shrinkage of array)
+return;}
+int coordSelect (void) // will continue to ask user for coord until it gets one within board and playable
+{
+	int x, y;
+	do {
+		printf ("Please enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):");
+		scanf ("%d, %d", &x, &y);
+		fprintf(logfile,"%d, %d", x, y);
+	} while (x < 0 || x > 36 || y <0 || y > 36); // will also need to check whether adjacent to one other cart!
+	return (x,y);	
+}
+void compileBoard (char arr[][36], int ROW, int COL){ //compile board
 logfile = fopen("log.txt", "a");
 int i, j;
 srand ((unsigned)time(NULL));
@@ -140,18 +191,6 @@ int main (void) //MAIN!
 }
 	
 	
-
-int coordSelect (void) // will continue to ask user for coord until it gets one within board and playable
-{
-	int x, y;
-	do {
-		printf ("Please enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):");
-		scanf ("%d, %d", &x, &y);
-		fprintf(logfile,"%d, %d", x, y);
-	} while (x < 0 || x > 36 || y <0 || y > 36); // will also need to check whether adjacent to one other cart!
-	return (x,y);	
-}
-
 /* void checkCoord (int x, int y, int ROW, int COL ) {// I'm still working on this function - Polly
   
     if (board[x+1][y] == board[x][y] && (x+1) < COL && y < ROW[x+1] ) { // checks the grids to the left of the selected grid
@@ -175,57 +214,8 @@ int coordSelect (void) // will continue to ask user for coord until it gets one 
 */
 
 
-
-
-
-
-
-//this function drops the letters down to fill the spaces, I call it dropping the bass DROP THA BASS
-void dropDown(char arr[][36], int ROW, int COL){
-int i, j, marker, zero, test;
-
-for (j=0;j<COL;j++){	//"sweeps" from left to right, column by column
-
-for (i=(ROW-1), zero=0, marker=0;i>=0;i--){	//goes from bottom to top
-
-if (arr[i][j]==0){
-	if (zero==0){
-		marker=i;	//marks the first space
-		}
-	zero++;	//how many spaces
-	}	//end marking the places of spaces
-	
-}	//end of down to up sweep
-
-if (zero>0){	//once upon a time...when there are spaces in the middle of arrays...
-	for (test=(marker-zero);test>=0;test--,marker--){
-        arr[marker][j]=arr[test][j]; //replace spaces with numbers from above
-        arr[test][j]=0;    //replace numbers from above with 0
-	}	//end bass dropping
-}	//
-}	//end of left to right sweep
-return;}
-
 //this function collapses columns
-void shrinkSideways(char arr[][36], int ROW, int *COL){
-int i, j, cave, marker=0,test;
 
-for (j=0, cave=0;j<*COL;j++){	//sweeping from left to right
-if (arr[ROW-1][j]==0){	//checks bottom number of column to see if column is empty
-	if (cave==0)
-		marker=j;	//marks first space
-	cave++;		//num of spaces
-	}
-}	//end looking for caves
-
-for (test=(marker+cave);test<*COL;test++,marker++){
-	for (i=0;i<ROW;i++){
-		arr[i][marker]=arr[i][test];	//overwriting
-	}
-}	//end shrinking the damn thing
-
-*COL-=cave;	//DIE!!!!!(shrinkage of array)
-return;}
 
 
 //These are the AI/Computer Play Functions.
