@@ -9,7 +9,7 @@
 
 FILE*logfile; //Global Pointer
 logfile = fopen("log.txt", "w");
-    fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nYung-Hsiang Chih 999751148"); //Student Numbers
+fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nYung-Hsiang Chih 999751148"); //Student Numbers
 void printBoard (char arr[][36], int ROW, int COL);
 void dropDown(char arr[][36], int ROW, int COL);
 void shrinkSideways(char arr[][36], int ROW, int *COL); //What are these doing here? Are they just initialising something?
@@ -117,14 +117,6 @@ void checkCoord (x, y, board, ROW, COL ) {// I'm still working on this function 
     board[x][y]=0;
 } 
 
-void file (void) //may be deleted in favour of having a global log file
-{
-    FILE*logfile;
-    logfile = fopen("log.txt", "w");
-    fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nYung-Hsiang Chih 999751148"); //Student Numbers
-    fclose(logfile);
-    return;
-}
 
 //this function takes random int's 1-4 and convert them to char's
 char NumToColour(int num){
