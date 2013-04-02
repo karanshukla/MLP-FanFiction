@@ -6,6 +6,29 @@
 //arr [rownum][colsnum]
 
 //functions
+int RowDefine (int r)
+{
+	r = -1;
+		do
+		{
+			printf("Enter the number of rows you'd like. Note that this program will live forever until you do!:");
+			scanf("%d", &r);
+		}
+		while (r < 1 || r > 36);	//need at least 1-36
+	return r;
+}
+
+int ColDefine (int c)
+{
+	c = -1;
+	do
+		{
+			printf("Enter the number of columns you'd like. Note that this program will live forever until you do!:");
+			scanf("%d", &c);
+		}
+		while (c < 1 || c > 36);	//again, 1-36
+		return c;
+}
 char NumToColour(int num){
 char colour;
 if (num==1)    colour = 'r';
@@ -16,12 +39,41 @@ return colour;
 }
 
 FILE*logfile; //Global Pointer
-void printBoard (char arr[][36], int ROW, int COL);
+void printBoard (char arr[][36], int ROW, int COL){ //most of the code is writing coordinates
+
+int col, row;   //row and col are inverted because of some weird logic going on here
+
+for (col=0; col<=ROW; col++){
+    for (row=-1; row<COL; row++){
+        if (row==-1){        //for y-coordinates
+            if (col==ROW)       //for the bottom left corner space
+                printf ("    ");
+            else if ((ROW-col)>10)  //for coordinates bigger than 10, writes alphabet coordinates
+                printf ("%3c ", ((ROW-col) + '9' -3));
+            else
+            printf ("%3d ", ROW-col-1); //y-number coordinates here
+        }
+        else if (col==ROW){     //for the x-coorfinates
+            if (row>9)     //for coordinates bigger than 10, writes alphabet coordinates
+                printf ("%c ", (row + '9'-2));
+            else
+            printf ("%d ", row);	//x-number coordinates here
+        }
+        else{
+		if (arr[col][row]==0)
+			printf("  ");	//prints spaces when encountering 0's
+        else
+        printf ("%c ", arr[col][row]);}		//this actually prints the board
+    }
+printf ("\n");
+}
+return;
+}
 void dropDown(char arr[][36], int ROW, int COL);
 void shrinkSideways(char arr[][36], int ROW, int *COL); //What are these doing here? Are they just initialising something?
 //this function randomly generates board according to user defined size
 void compileBoard (char arr[][36], int ROW, int COL){
-
+logfile = fopen("log.txt", "a");
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
@@ -57,12 +109,19 @@ int main (void) //MAIN!
 		int COL = ColDefine(COL);
 		printf("You have entered %d columns,\n", COL);
 		compileBoard(arr, ROW, COL);
-	
-	} else if (board == '2'){
+		char decision = '\n';
+		while (decision == '\n'){
+			printf("\nPress Enter to continue...\n");
+			scanf("%c", &decision);
+			printBoard(arr, ROW, COL);
+		}
+
+	/*else if (board == '2'){
 		//FileBoard(void); //look below for this function
 }
 	else 
 		return -2;
+		*/
 	
 	/* PSEUDO CODE compileBoard (arr, ROW, COL); 
 	
@@ -80,29 +139,7 @@ int main (void) //MAIN!
 			
 }
 	
-	int RowDefine (int r)
-{
-	r = -1;
-		do
-		{
-			printf("Enter the number of rows you'd like. Note that this program will live forever until you do!:");
-			scanf("%d", &r);
-		}
-		while (r < 1 || r > 36);	//need at least 1-36
-	return r;
-}
-
-int ColDefine (int c)
-{
-	c = -1;
-	do
-		{
-			printf("Enter the number of columns you'd like. Note that this program will live forever until you do!:");
-			scanf("%d", &c);
-		}
-		while (c < 1 || c > 36);	//again, 1-36
-		return c;
-}
+	
 
 int coordSelect (void) // will continue to ask user for coord until it gets one within board and playable
 {
@@ -141,36 +178,7 @@ int coordSelect (void) // will continue to ask user for coord until it gets one 
 
 
 
-void printBoard (char arr[][36], int ROW, int COL){ //most of the code is writing coordinates
 
-int col, row;   //row and col are inverted because of some weird logic going on here
-
-for (col=0; col<=ROW; col++){
-    for (row=-1; row<COL; row++){
-        if (row==-1){        //for y-coordinates
-            if (col==ROW)       //for the bottom left corner space
-                printf ("    ");
-            else if ((ROW-col)>10)  //for coordinates bigger than 10, writes alphabet coordinates
-                printf ("%3c ", ((ROW-col) + '9' -3));
-            else
-            printf ("%3d ", ROW-col-1); //y-number coordinates here
-        }
-        else if (col==ROW){     //for the x-coorfinates
-            if (row>9)     //for coordinates bigger than 10, writes alphabet coordinates
-                printf ("%c ", (row + '9'-2));
-            else
-            printf ("%d ", row);	//x-number coordinates here
-        }
-        else{
-		if (arr[col][row]==0)
-			printf("  ");	//prints spaces when encountering 0's
-        else
-        printf ("%c ", arr[col][row]);}		//this actually prints the board
-    }
-printf ("\n");
-}
-return;
-}
 
 //this function drops the letters down to fill the spaces, I call it dropping the bass DROP THA BASS
 void dropDown(char arr[][36], int ROW, int COL){
@@ -285,7 +293,7 @@ return colour;
 }
 */
 
-int deleteAreaCheck(int rows, int cols, char arr[][36]){/// this checks if it a valid move adn returns the score for the move
+int deleteAreaCheck(int rows, int cols, char arr[][36]){// this checks if it a valid move adn returns the score for the move
     int score=0;
     char given=arr[rows][cols];
     if(arr[rows+1][cols]==given || arr[rows][cols+1]==given || arr[rows-1][cols]==given || arr[rows][cols-1]==given){
@@ -306,7 +314,7 @@ int deleteArea(char given, int x, int y, char arr[][36], int score){//this is a 
         return score;
     }
     return 0;
-}
+}}
 /*--- thus is Rachel Baker's print board--- keep it as a refference?
 void printBoard(int rows, int cols, char arr[][36]){
     int i, j;
