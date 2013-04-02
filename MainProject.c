@@ -6,20 +6,39 @@
 //arr [rownum][colsnum]
 
 //functions
+char NumToColour(int num){
+char colour;
+if (num==1)    colour = 'r';
+else if (num==2)    colour = 'y';
+else if (num==3)    colour = 'b';
+else if (num==4)    colour = 'g';
+return colour;
+}
 
 FILE*logfile; //Global Pointer
-logfile = fopen("log.txt", "w");
-fprintf(logfile, "Karan Shukla 999593293\nRachel Baker\nPolly Lin 999639299\nYung-Hsiang Chih 999751148"); //Student Numbers
 void printBoard (char arr[][36], int ROW, int COL);
 void dropDown(char arr[][36], int ROW, int COL);
 void shrinkSideways(char arr[][36], int ROW, int *COL); //What are these doing here? Are they just initialising something?
-void compileBoard(int rows, int cols, char array[][36]);//compiles the board
+//this function randomly generates board according to user defined size
+void compileBoard (char arr[][36], int ROW, int COL){
+
+int i, j;
+srand ((unsigned)time(NULL));
+for (i=0;i<ROW;i++){
+    for (j=0;j<COL;j++){
+        arr[i][j]=NumToColour(rand()%4+1); //NumToColour sends back chars to be written into array
+        fprintf(logfile, "%c", arr[i][j]);
+    }
+}
+return;
+}
 int deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
 int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by programn
-char NumToColour(int num);//given a number it changes to a char representing a color
+//this function takes random int's 1-4 and convert them to char's
+
 int main (void) //MAIN!
 {
-	char arr[36][36]={0};
+	char arr[36][36];
 	int ROW,COL;
 	
 	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
@@ -36,16 +55,16 @@ int main (void) //MAIN!
 		int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
 		printf("\nYou have entered %d rows.\n", ROW);
 		int COL = ColDefine(COL);
-		printf("You have entered %d columns,\n", COL);	
+		printf("You have entered %d columns,\n", COL);
+		compileBoard(arr, ROW, COL);
 	
 	} else if (board == '2'){
-		FileBoard(void); //look below for this function
-	}
-
+		//FileBoard(void); //look below for this function
+}
 	else 
 		return -2;
 	
-	compileBoard (arr, ROW, COL);
+	/* PSEUDO CODE compileBoard (arr, ROW, COL); 
 	
 	while (SearchMove) //I think Rachel already made a function for this?
 	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly 
@@ -57,7 +76,7 @@ int main (void) //MAIN!
 	}
 
 	
-	return 0;
+	return 0; */
 			
 }
 	
@@ -89,14 +108,14 @@ int coordSelect (void) // will continue to ask user for coord until it gets one 
 {
 	int x, y;
 	do {
-		printf ("Please enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):",x,y);
+		printf ("Please enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):");
 		scanf ("%d, %d", &x, &y);
-		fprintf(logfile,"%d, %d", &x, &y);
+		fprintf(logfile,"%d, %d", x, y);
 	} while (x < 0 || x > 36 || y <0 || y > 36); // will also need to check whether adjacent to one other cart!
 	return (x,y);	
 }
 
-void checkCoord (x, y, board, ROW, COL ) {// I'm still working on this function - Polly
+/* void checkCoord (int x, int y, int ROW, int COL ) {// I'm still working on this function - Polly
   
     if (board[x+1][y] == board[x][y] && (x+1) < COL && y < ROW[x+1] ) { // checks the grids to the left of the selected grid
     	checkCoord(x+1, y, board);
@@ -116,31 +135,11 @@ void checkCoord (x, y, board, ROW, COL ) {// I'm still working on this function 
     
     board[x][y]=0;
 } 
+*/
 
 
-//this function takes random int's 1-4 and convert them to char's
-char NumToColour(int num){
-char colour;
-if (num==1)    colour = 'r';
-else if (num==2)    colour = 'y';
-else if (num==3)    colour = 'b';
-else if (num==4)    colour = 'g';
-return colour;
-}
 
-//this function randomly generates board according to user defined size
-void compileBoard (char arr[][36], int ROW, int COL){
 
-int i, j;
-srand ((unsigned)time(NULL));
-for (i=0;i<ROW;i++){
-    for (j=0;j<COL;j++){
-        arr[i][j]=NumToColour(rand()%4+1); //NumToColour sends back chars to be written into array
-        fprintf(logfile, "%c", array[i][j]);
-    }
-}
-return;
-}
 
 void printBoard (char arr[][36], int ROW, int COL){ //most of the code is writing coordinates
 
@@ -223,7 +222,7 @@ return;}
 
 //These are the AI/Computer Play Functions.
 
-int RowPick (int row)
+int RowPick (int row, int ROW)
 {
     srand((unsigned)time(NULL)); //ensure random number
 	int Rowpick = rand()%(ROW); //ROWS as defined by the function for grabbing the amount of rows
@@ -231,7 +230,7 @@ int RowPick (int row)
 	return Rowpick;
 }
 
-int ColPick (int col)
+int ColPick (int col, int COL)
 {
 		srand((unsigned)time(NULL));
 		int Colpick = rand() % (COL);
@@ -239,7 +238,7 @@ int ColPick (int col)
 		return Colpick;
 }
 
-int FileBoard (void) //this will ready the numbers/characters off the file
+/* int FileBoard (void) //this will ready the numbers/characters off the file
 {
 	FILE *input; //based off of the input file specification in instructions
 	char filename[13];
@@ -250,7 +249,7 @@ int FileBoard (void) //this will ready the numbers/characters off the file
 	return -1;
 	}
 	else
-	input = fopen("%s", "r", filename);
+	input = fopen(filename, "r");
 	int b;
 	while (fscanf(input, "%d", &b) != EOF) //loop for getting them.
 	{
@@ -258,8 +257,9 @@ int FileBoard (void) //this will ready the numbers/characters off the file
 		return b;
 	}
 }
+* /
 
-char NumToColour(int num){ //this takes a number from 1 to 4 and replaces it with  a character representing a color
+/* WTF DUPLICATE? char NumToColour(int num){ //this takes a number from 1 to 4 and replaces it with  a character representing a color
 char colour;
 if (num==1)    colour = 'r';//rech
 else if (num==2)    colour = 'y';//yellow
@@ -267,11 +267,12 @@ else if (num==3)    colour = 'b';//blue
 else if (num==4)    colour = 'g';//green
 return colour;
 }
+*/
 
-void compileBoard(int rows, int cols, char arr[][36]){/* this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
+/* TWO COMPILE BOARD LOL void compileBoard(int rows, int cols, char arr[][36]){/* this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
                                          it takes as paramers the row and colom size
                                          the character array corisponds to a color.*/
-    int i,j, temp;
+    /* int i,j, temp;
     srand((unsigned)time(NULL));
     for(i=0;i<rows;i++){
         for(j=0;j<cols;j++){
@@ -282,6 +283,8 @@ void compileBoard(int rows, int cols, char arr[][36]){/* this function creates a
         }
     return;
 }
+*/
+
 int deleteAreaCheck(int rows, int cols, char arr[][36]){/// this checks if it a valid move adn returns the score for the move
     int score=0;
     char given=arr[rows][cols];
