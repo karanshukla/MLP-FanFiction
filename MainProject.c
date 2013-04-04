@@ -3,8 +3,8 @@
 #include <time.h>
 #include <stdlib.h>
 
-char NumToColour(int num);
-int RowDefine (int r);
+char NumToColour(int num); //converts to colour
+int RowDefine (int r); ask 
 int ColDefine (int c);
 void printBoard (char arr[][36], int ROW, int COL);
 void dropDown(char arr[][36], int ROW, int COL);
@@ -55,24 +55,11 @@ int main (void) //MAIN!
 
 	/*else if (board == '2'){
 		//FileBoard(void); //look below for this function
-}
+	}
 	else
 		return -2;
 		*/
 
-	/* PSEUDO CODE compileBoard (arr, ROW, COL);
-
-	while (SearchMove) //I think Rachel already made a function for this?
-	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly
-	printfBoard(arr, ROW, COL); //unfortunately the system("cls") will only work in WinBlows
-	coordSelect(void); // asks the user to pick coordinates
-
-	checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. still in the works! -Polly
-
-	}
-
-
-	return 0; */
 
 }
 
@@ -210,29 +197,6 @@ coordSelect(px, py, ROW, COL);
 
 
 
-/* void checkCoord (int x, int y, int ROW, int COL ) {// I'm still working on this function - Polly
-
-    if (board[x+1][y] == board[x][y] && (x+1) < COL && y < ROW[x+1] ) { // checks the grids to the left of the selected grid
-    	checkCoord(x+1, y, board);
-    }
-
-    if (board[x-1][y] == board[x][y] && (x-1) > 0 && (x-1) >= o) { // checks the grids to the right of the selected grid
-    	checkCoord(x-1, y, board);
-    }
-
-    if (board[x][y+1] == board[x][y] && (y+1) <= COL) { //checks the grids above the selected grid
-    	checkCoord(x, y+1, board);
-    }
-
-    if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { // checks the grids below the selected grid
-    	checkCoord(x, y-1, board);
-    }
-
-    board[x][y]=0;
-}
-*/
-
-
 //this function collapses columns
 
 
@@ -276,21 +240,8 @@ int ColPick (int col, int COL)
 }
 * /
 
-/* TWO COMPILE BOARD LOL void compileBoard(int rows, int cols, char arr[][36]){/* this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
-                                         it takes as paramers the row and colom size
-                                         the character array corisponds to a color.*/
-    /* int i,j, temp;
-    srand((unsigned)time(NULL));
-    for(i=0;i<rows;i++){
-        for(j=0;j<cols;j++){
-            temp=rand()%4+1;
-            arr[i][j]=NumToColour(temp);
-            }
 
-        }
-    return;
-}
-*/
+
 
 int deleteAreaCheck(int rows, int cols, char arr[][36]){// this checks if it a valid move adn returns the score for the move
     int score=0;
@@ -331,3 +282,55 @@ void printBoard(int rows, int cols, char arr[][36]){
     return;
 }
 */
+
+/* void checkCoord (int x, int y, int ROW, int COL ) {// I'm still working on this function - Polly
+
+    if (board[x+1][y] == board[x][y] && (x+1) < COL && y < ROW[x+1] ) { // checks the grids to the left of the selected grid
+    	checkCoord(x+1, y, board);
+    }
+
+    if (board[x-1][y] == board[x][y] && (x-1) > 0 && (x-1) >= o) { // checks the grids to the right of the selected grid
+    	checkCoord(x-1, y, board);
+    }
+
+    if (board[x][y+1] == board[x][y] && (y+1) <= COL) { //checks the grids above the selected grid
+    	checkCoord(x, y+1, board);
+    }
+
+    if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { // checks the grids below the selected grid
+    	checkCoord(x, y-1, board);
+    }
+
+    board[x][y]=0;
+}
+*/
+
+/* TWO COMPILE BOARD LOL void compileBoard(int rows, int cols, char arr[][36]){/* this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
+                                         it takes as paramers the row and colom size
+                                         the character array corisponds to a color.*/
+    /* int i,j, temp;
+    srand((unsigned)time(NULL));
+    for(i=0;i<rows;i++){
+        for(j=0;j<cols;j++){
+            temp=rand()%4+1;
+            arr[i][j]=NumToColour(temp);
+            }
+
+        }
+    return;
+}
+*/
+
+	/* PSEUDO CODE compileBoard (arr, ROW, COL);
+
+	while (SearchMove) //I think Rachel already made a function for this?
+	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly
+	printfBoard(arr, ROW, COL); //unfortunately the system("cls") will only work in WinBlows
+	coordSelect(void); // asks the user to pick coordinates
+
+	checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. still in the works! -Polly
+
+	}
+
+
+	return 0; */
