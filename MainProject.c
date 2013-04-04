@@ -62,7 +62,7 @@ int main (void) //MAIN!
 		return -2;
 		*/
 
-
+return 0;
 }
 
 
