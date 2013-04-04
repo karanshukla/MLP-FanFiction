@@ -13,7 +13,7 @@ int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid o
 void dropDown(char arr[][36], int ROW, int COL);	//drops the letter down to fill empty spaces
 void shrinkSideways(char arr[][36], int ROW, int *COL);	//collapses empty columns TO THE LEFT TO THE LEFT
 void coordSelect (int *i, int *j, int ROW, int COL); // will continue to ask user for coord until it gets one within board and playable
-void coordmain(int x, int y);	//allows user to select coordinates, prints out the moves
+void coordmain(int x, int y, int *px, int *py);	//allows user to select coordinates, prints out the moves
 int deleteAreaCheck(int rows, int cols, char arr[][36]);	//checks for moves and calls deleteArea to delete shit
 int deleteArea(char given, int x, int y, char arr[][36], int score);	//I kill characters to make them 0
 
@@ -29,6 +29,8 @@ int main (void) //MAIN!
 	char arr[36][36];
 	int ROW,COL;
 	int x, y;
+	int *px;
+	int *py;
 
 	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
 	char choice = getchar(); //menu choice
@@ -51,9 +53,9 @@ int main (void) //MAIN!
 			printf("\nPress Enter to continue...\n");
 			scanf("%c", &decision);
 			printBoard(arr, ROW, COL);
-			coordmain(x, y);
-	
-		}
+			coordmain(x, y, px, py);
+			coordSelect(px, py, ROW, COL);
+			}
 
 	/*else if (board == '2'){
 		//FileBoard(void); //look below for this function
@@ -62,10 +64,10 @@ int main (void) //MAIN!
 		return -2;
 		*/
 
-return 0;
+
 }
 
-
+}
 int RowDefine ()
 {
 	int r;
@@ -191,10 +193,9 @@ for (i=0;i<ROW;i++){
 return;
 }
 
-void coordmain(int x, int y){
-int *px = &x;
-int *py = &y;
-coordSelect(px, py, ROW, COL);
+void coordmain(int x, int y, int *px, int *py){
+*px = &x;
+*py = &y;
 }
 
 
@@ -336,3 +337,4 @@ void printBoard(int rows, int cols, char arr[][36]){
 
 
 	return 0; */
+
