@@ -3,7 +3,80 @@
 #include <time.h>
 #include <stdlib.h>
 
+char NumToColour(int num);
+int RowDefine (int r);
+int ColDefine (int c);
+void printBoard (char arr[][36], int ROW, int COL);
+void dropDown(char arr[][36], int ROW, int COL);
+void shrinkSideways(char arr[][36], int ROW, int *COL);
+void coordSelect (int *i, int *j, int ROW, int COL); // will continue to ask user for coord until it gets one within board and playable
+void compileBoard (char arr[][36], int ROW, int COL);
+void coordmain(int x, int y);
+int deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
+int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by programn
+//this function takes random int's 1-4 and convert them to char's
+int RowPick (int row, int ROW);
+int ColPick (int col, int COL);
+int deleteAreaCheck(int rows, int cols, char arr[][36]);
+int deleteArea(char given, int x, int y, char arr[][36], int score);
+
 FILE*logfile; //Global Pointer
+
+int main (void) //MAIN!
+{
+	char arr[36][36];
+	int ROW,COL;
+	int x, y;
+
+	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
+	char choice = getchar(); //menu choice
+	if (choice != '\n')
+		return -2; //error code for Program Termination
+
+	//Asking if user wants to create own board I did it! return values are really random though.
+	printf ("\nType '1' to start a new game, type '2' to load an existing file. Anything else to exit.");
+	char board;
+	scanf ("%c", &board);
+	if (board == '1') { // this part is from the bottom
+		//file(); We'll add this later!
+		int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
+		printf("\nYou have entered %d rows.\n", ROW);
+		int COL = ColDefine(COL);
+		printf("You have entered %d columns,\n", COL);
+		compileBoard(arr, ROW, COL);
+		char decision = '\n';
+		while (decision == '\n'){
+			printf("\nPress Enter to continue...\n");
+			scanf("%c", &decision);
+			printBoard(arr, ROW, COL);
+			coordmain(x, y);
+	
+		}
+
+	/*else if (board == '2'){
+		//FileBoard(void); //look below for this function
+}
+	else
+		return -2;
+		*/
+
+	/* PSEUDO CODE compileBoard (arr, ROW, COL);
+
+	while (SearchMove) //I think Rachel already made a function for this?
+	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly
+	printfBoard(arr, ROW, COL); //unfortunately the system("cls") will only work in WinBlows
+	coordSelect(void); // asks the user to pick coordinates
+
+	checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. still in the works! -Polly
+
+	}
+
+
+	return 0; */
+
+}
+
+
 int RowDefine (int r)
 {
 	r = -1;
@@ -128,68 +201,13 @@ for (i=0;i<ROW;i++){
 }
 return;
 }
-int deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
-int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by programn
-//this function takes random int's 1-4 and convert them to char's
+
 void coordmain(int x, int y){
 int *px = &x;
 int *py = &y;
 coordSelect(px, py, ROW, COL);
 }
 
-int main (void) //MAIN!
-{
-	char arr[36][36];
-	int ROW,COL;
-	int x, y;
-
-	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
-	char choice = getchar(); //menu choice
-	if (choice != '\n')
-		return -2; //error code for Program Termination
-
-	//Asking if user wants to create own board I did it! return values are really random though.
-	printf ("\nType '1' to start a new game, type '2' to load an existing file. Anything else to exit.");
-	char board;
-	scanf ("%c", &board);
-	if (board == '1') { // this part is from the bottom
-		//file(); We'll add this later!
-		int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
-		printf("\nYou have entered %d rows.\n", ROW);
-		int COL = ColDefine(COL);
-		printf("You have entered %d columns,\n", COL);
-		compileBoard(arr, ROW, COL);
-		char decision = '\n';
-		while (decision == '\n'){
-			printf("\nPress Enter to continue...\n");
-			scanf("%c", &decision);
-			printBoard(arr, ROW, COL);
-			coordmain(x, y);
-	
-		}
-
-	/*else if (board == '2'){
-		//FileBoard(void); //look below for this function
-}
-	else
-		return -2;
-		*/
-
-	/* PSEUDO CODE compileBoard (arr, ROW, COL);
-
-	while (SearchMove) //I think Rachel already made a function for this?
-	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly
-	printfBoard(arr, ROW, COL); //unfortunately the system("cls") will only work in WinBlows
-	coordSelect(void); // asks the user to pick coordinates
-
-	checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. still in the works! -Polly
-
-	}
-
-
-	return 0; */
-
-}
 
 
 /* void checkCoord (int x, int y, int ROW, int COL ) {// I'm still working on this function - Polly
@@ -257,16 +275,6 @@ int ColPick (int col, int COL)
 	}
 }
 * /
-
-/* WTF DUPLICATE? char NumToColour(int num){ //this takes a number from 1 to 4 and replaces it with  a character representing a color
-char colour;
-if (num==1)    colour = 'r';//rech
-else if (num==2)    colour = 'y';//yellow
-else if (num==3)    colour = 'b';//blue
-else if (num==4)    colour = 'g';//green
-return colour;
-}
-*/
 
 /* TWO COMPILE BOARD LOL void compileBoard(int rows, int cols, char arr[][36]){/* this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
                                          it takes as paramers the row and colom size
