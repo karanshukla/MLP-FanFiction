@@ -83,7 +83,7 @@ if (arr[i][j]==0){
 		}
 	zero++;	//how many spaces
 	}	//end marking the places of spaces
-	
+
 }	//end of down to up sweep
 
 if (zero>0){	//once upon a time...when there are spaces in the middle of arrays...
@@ -113,15 +113,11 @@ for (test=(marker+cave);test<*COL;test++,marker++){
 
 *COL-=cave;	//DIE!!!!!(shrinkage of array)
 return;}
-int coordSelect (void) // will continue to ask user for coord until it gets one within board and playable
+void coordSelect (int *i, int *j, int ROW, int COL) // will continue to ask user for coord until it gets one within board and playable
 {
-	int x, y;
-	do {
-		printf ("Please enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):");
-		scanf ("%d, %d", &x, &y);
-		fprintf(logfile,"%d, %d", x, y);
-	} while (x < 0 || x > 36 || y <0 || y > 36); // will also need to check whether adjacent to one other cart!
-	return (x,y);	
+		printf ("\nPlease enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):");
+            scanf("%d", &*i);
+            scanf("%d", &*j);
 }
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
 logfile = fopen("log.txt", "a");
@@ -143,12 +139,12 @@ int main (void) //MAIN!
 {
 	char arr[36][36];
 	int ROW,COL;
-	
+
 	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
 	char choice = getchar(); //menu choice
 	if (choice != '\n')
 		return -2; //error code for Program Termination
-		
+
 	//Asking if user wants to create own board I did it! return values are really random though.
 	printf ("\nType '1' to start a new game, type '2' to load an existing file. Anything else to exit.");
 	char board;
@@ -165,52 +161,56 @@ int main (void) //MAIN!
 			printf("\nPress Enter to continue...\n");
 			scanf("%c", &decision);
 			printBoard(arr, ROW, COL);
+			int x = 1, y = 1;
+			int *px = &x;
+			int *py = &y;
+			coordSelect(px, py, ROW, COL);
 		}
 
 	/*else if (board == '2'){
 		//FileBoard(void); //look below for this function
 }
-	else 
+	else
 		return -2;
 		*/
-	
-	/* PSEUDO CODE compileBoard (arr, ROW, COL); 
-	
+
+	/* PSEUDO CODE compileBoard (arr, ROW, COL);
+
 	while (SearchMove) //I think Rachel already made a function for this?
-	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly 
+	system("cls");	//I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly
 	printfBoard(arr, ROW, COL); //unfortunately the system("cls") will only work in WinBlows
 	coordSelect(void); // asks the user to pick coordinates
-	
-	checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. still in the works! -Polly 
+
+	checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. still in the works! -Polly
 
 	}
 
-	
+
 	return 0; */
-			
+
 }
-	
-	
+
+
 /* void checkCoord (int x, int y, int ROW, int COL ) {// I'm still working on this function - Polly
-  
+
     if (board[x+1][y] == board[x][y] && (x+1) < COL && y < ROW[x+1] ) { // checks the grids to the left of the selected grid
     	checkCoord(x+1, y, board);
     }
-    
+
     if (board[x-1][y] == board[x][y] && (x-1) > 0 && (x-1) >= o) { // checks the grids to the right of the selected grid
     	checkCoord(x-1, y, board);
     }
-    
+
     if (board[x][y+1] == board[x][y] && (y+1) <= COL) { //checks the grids above the selected grid
     	checkCoord(x, y+1, board);
     }
-    
+
     if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { // checks the grids below the selected grid
     	checkCoord(x, y-1, board);
     }
-    
+
     board[x][y]=0;
-} 
+}
 */
 
 
