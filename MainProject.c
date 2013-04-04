@@ -3,22 +3,24 @@
 #include <time.h>
 #include <stdlib.h>
 
-char NumToColour(int num); //converts to colour
-int RowDefine (int r); ask 
-int ColDefine (int c);
-void printBoard (char arr[][36], int ROW, int COL);
-void dropDown(char arr[][36], int ROW, int COL);
-void shrinkSideways(char arr[][36], int ROW, int *COL);
-void coordSelect (int *i, int *j, int ROW, int COL); // will continue to ask user for coord until it gets one within board and playable
-void compileBoard (char arr[][36], int ROW, int COL);
-void coordmain(int x, int y);
+char NumToColour(int num); //this function takes random int's 1-4 and convert them to char's
+int RowDefine (); //asks for # of rows
+int ColDefine ();	//asks for # of cols
+void compileBoard (char arr[][36], int ROW, int COL);	//sends back an array full of women
+void printBoard (char arr[][36], int ROW, int COL);	//self-explanatory
 int deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
 int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by programn
-//this function takes random int's 1-4 and convert them to char's
-int RowPick (int row, int ROW);
-int ColPick (int col, int COL);
-int deleteAreaCheck(int rows, int cols, char arr[][36]);
-int deleteArea(char given, int x, int y, char arr[][36], int score);
+void dropDown(char arr[][36], int ROW, int COL);	//drops the letter down to fill empty spaces
+void shrinkSideways(char arr[][36], int ROW, int *COL);	//collapses empty columns TO THE LEFT TO THE LEFT
+void coordSelect (int *i, int *j, int ROW, int COL); // will continue to ask user for coord until it gets one within board and playable
+void coordmain(int x, int y);	//allows user to select coordinates, prints out the moves
+int deleteAreaCheck(int rows, int cols, char arr[][36]);	//checks for moves and calls deleteArea to delete shit
+int deleteArea(char given, int x, int y, char arr[][36], int score);	//I kill characters to make them 0
+
+//AI Stuff
+int RowPick (int row, int ROW);	//randomly picks a row
+int ColPick (int col, int COL);	//randomly picks a column
+
 
 FILE*logfile; //Global Pointer
 
@@ -39,9 +41,9 @@ int main (void) //MAIN!
 	scanf ("%c", &board);
 	if (board == '1') { // this part is from the bottom
 		//file(); We'll add this later!
-		int ROW = RowDefine(ROW); 	//don't think you need to send an integer over... Or maybe use pointers
+		int ROW = RowDefine(); 	//don't think you need to send an integer over... Or maybe use pointers
 		printf("\nYou have entered %d rows.\n", ROW);
-		int COL = ColDefine(COL);
+		int COL = ColDefine();
 		printf("You have entered %d columns,\n", COL);
 		compileBoard(arr, ROW, COL);
 		char decision = '\n';
@@ -64,9 +66,9 @@ int main (void) //MAIN!
 }
 
 
-int RowDefine (int r)
+int RowDefine ()
 {
-	r = -1;
+	int r;
 		do
 		{
 			printf("Enter the number of rows you'd like. Note that this program will live forever until you do!:");
@@ -76,9 +78,9 @@ int RowDefine (int r)
 	return r;
 }
 
-int ColDefine (int c)
+int ColDefine ()
 {
-	c = -1;
+	int c;
 	do
 		{
 			printf("Enter the number of columns you'd like. Note that this program will live forever until you do!:");
