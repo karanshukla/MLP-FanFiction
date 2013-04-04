@@ -12,8 +12,7 @@ int deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move
 int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by programn
 void dropDown(char arr[][36], int ROW, int COL);	//drops the letter down to fill empty spaces
 void shrinkSideways(char arr[][36], int ROW, int *COL);	//collapses empty columns TO THE LEFT TO THE LEFT
-void coordSelect (int *i, int *j, int ROW, int COL); // will continue to ask user for coord until it gets one within board and playable
-void coordmain(int x, int y, int *px, int *py);	//allows user to select coordinates, prints out the moves
+void coordSelect (int *x, int *y, int ROW, int COL); // will continue to ask user for coord until it gets one within board and playable
 int deleteAreaCheck(int rows, int cols, char arr[][36]);	//checks for moves and calls deleteArea to delete shit
 int deleteArea(char given, int x, int y, char arr[][36], int score);	//I kill characters to make them 0
 
@@ -28,9 +27,7 @@ int main (void) //MAIN!
 {
 	char arr[36][36];
 	int ROW,COL;
-	int x, y;
-	int *px;
-	int *py;
+	int *x, *y;
 
 	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
 	char choice = getchar(); //menu choice
@@ -53,8 +50,7 @@ int main (void) //MAIN!
 			printf("\nPress Enter to continue...\n");
 			scanf("%c", &decision);
 			printBoard(arr, ROW, COL);
-			coordmain(x, y, px, py);
-			coordSelect(px, py, ROW, COL);
+			coordSelect(&x, &y, ROW, COL);
 			}
 
 	/*else if (board == '2'){
@@ -64,7 +60,7 @@ int main (void) //MAIN!
 		return -2;
 		*/
 
-
+return 0;
 }
 
 }
@@ -174,11 +170,12 @@ for (test=(marker+cave);test<*COL;test++,marker++){
 
 *COL-=cave;	//DIE!!!!!(shrinkage of array)
 return;}
-void coordSelect (int *i, int *j, int ROW, int COL) // will continue to ask user for coord until it gets one within board and playable
+void coordSelect (int *x, int *y, int ROW, int COL) // will continue to ask user for coord until it gets one within board and playable
 {
-		printf ("\nPlease enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column):");
-            scanf("%d", &*i);
-            scanf("%d", &*j);
+		printf ("\nPlease enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column): ");
+            scanf("%d %d", &*x, &*y);
+        printf ("You have selected %d %d", *x, *y);
+        return;
 }
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
 logfile = fopen("log.txt", "a");
@@ -191,11 +188,6 @@ for (i=0;i<ROW;i++){
     }
 }
 return;
-}
-
-void coordmain(int x, int y, int *px, int *py){
-*px = &x;
-*py = &y;
 }
 
 
