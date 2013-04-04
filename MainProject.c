@@ -3,9 +3,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-//arr [rownum][colsnum]
-
-//functions
+FILE*logfile; //Global Pointer
 int RowDefine (int r)
 {
 	r = -1;
@@ -38,7 +36,6 @@ else if (num==4)    colour = 'g';
 return colour;
 }
 
-FILE*logfile; //Global Pointer
 void printBoard (char arr[][36], int ROW, int COL){ //most of the code is writing coordinates
 
 int col, row;   //row and col are inverted because of some weird logic going on here
@@ -134,11 +131,17 @@ return;
 int deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
 int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by programn
 //this function takes random int's 1-4 and convert them to char's
+void coordmain(int x, int y){
+int *px = &x;
+int *py = &y;
+coordSelect(px, py, ROW, COL);
+}
 
 int main (void) //MAIN!
 {
 	char arr[36][36];
 	int ROW,COL;
+	int x, y;
 
 	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
 	char choice = getchar(); //menu choice
@@ -161,10 +164,8 @@ int main (void) //MAIN!
 			printf("\nPress Enter to continue...\n");
 			scanf("%c", &decision);
 			printBoard(arr, ROW, COL);
-			int x = 1, y = 1;
-			int *px = &x;
-			int *py = &y;
-			coordSelect(px, py, ROW, COL);
+			coordmain(x, y);
+	
 		}
 
 	/*else if (board == '2'){
