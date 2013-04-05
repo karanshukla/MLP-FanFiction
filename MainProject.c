@@ -60,9 +60,9 @@ int main (void) //MAIN!
 		return -2;
 		*/
 
-return 0;
-}
 
+}
+return 0;
 }
 int RowDefine ()
 {
@@ -329,4 +329,3 @@ void printBoard(int rows, int cols, char arr[][36]){
 
 
 	return 0; */
-
