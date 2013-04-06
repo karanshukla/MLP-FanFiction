@@ -27,6 +27,8 @@ int main (void) //MAIN!
 	char arr[36][36];
 	int ROW,COL;
 	int *x, *y;
+	char given;
+	int score = 0;
 
 	printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
 	char choice = getchar(); //menu choice
@@ -46,11 +48,11 @@ int main (void) //MAIN!
 		compileBoard(arr, ROW, COL);
 		char decision = '\n';
 		while (decision == '\n'){
-			printf("\nPress Enter to continue...\n");
 			scanf("%c", &decision);
 			printBoard(arr, ROW, COL);
 			coordSelect(&x, &y, ROW, COL);
-			
+			score = deleteArea(given, x, y, arr, score);
+			printf("\n\nYour score is %d\n", score);
 			}
 
 	/*else if (board == '2'){
