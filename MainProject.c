@@ -26,7 +26,10 @@ int main (void) //MAIN!
 {
 	char arr[36][36];
 	int ROW,COL;
-	int *x, *y;
+	int *x; //Pointer for x co-ordinate
+	int *y; //Pointer for y co-ordinate
+	x = (int*)(malloc(1 * sizeof(int)));
+	y = (int*)(malloc(1* sizeof(int)));
 	char given;
 	int score = 0;
 
@@ -41,17 +44,17 @@ int main (void) //MAIN!
 	scanf ("%c", &board);
 	if (board == '1') { // this part is from the bottom
 		//file(); We'll add this later!
-		int ROW = RowDefine(); 	//don't think you need to send an integer over... Or maybe use pointers
+		ROW = RowDefine(); 	//don't think you need to send an integer over... Or maybe use pointers
 		printf("\nYou have entered %d rows.\n", ROW);
-		int COL = ColDefine();
+		COL = ColDefine();
 		printf("You have entered %d columns,\n", COL);
 		compileBoard(arr, ROW, COL);
 		char decision = '\n';
 		while (decision == '\n'){
 			scanf("%c", &decision);
 			printBoard(arr, ROW, COL);
-			coordSelect(&x, &y, ROW, COL);
-			score = deleteArea(given, x, y, arr, score);
+			coordSelect(x, y, ROW, COL);
+			score = deleteArea(given, *x, *y, arr, score);
 			printf("\n\nYour score is %d\n", score);
 			}
 
@@ -175,7 +178,16 @@ return;}
 void coordSelect (int *x, int *y, int ROW, int COL) // will continue to ask user for coord until it gets one within board and playable
 {
 		printf ("\nPlease enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column): ");
-            scanf("%d %d", &*x, &*y);
+            scanf("%d %d", x, y);
+			while (*x > COL || *x < 0){
+			printf("\nEnter a valid x coordinate:");
+			scanf("%d", x);
+		}
+		
+		while (*y > ROW || *y < 0){
+			printf("Enter a valid y-coordinate:");
+			scanf("%d", y);
+		}
         printf ("You have selected %d %d", *x, *y);
         return;
 }
