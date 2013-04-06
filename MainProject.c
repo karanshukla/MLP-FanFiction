@@ -179,16 +179,16 @@ void coordSelect (int *x, int *y, int ROW, int COL) // will continue to ask user
 {
 		printf ("\nPlease enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column): ");
             scanf("%d %d", x, y);
-			while (*x > COL || *x < 0){
+			while (*x >= COL || *x < 0){
 			printf("\nEnter a valid x coordinate:");
 			scanf("%d", x);
 		}
 		
-		while (*y > ROW || *y < 0){
+		while (*y >= ROW || *y < 0){
 			printf("Enter a valid y-coordinate:");
 			scanf("%d", y);
 		}
-        printf ("You have selected %d %d", *x, *y);
+        printf ("You have selected %d %d", (*x), (*y));
         return;
 }
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
@@ -314,10 +314,10 @@ void printBoard(int rows, int cols, char arr[][36]){
 }
 */
 
-/* TWO COMPILE BOARD LOL void compileBoard(int rows, int cols, char arr[][36]){/* this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
+/* TWO COMPILE BOARD LOL void compileBoard(int rows, int cols, char arr[][36]){/this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
                                          it takes as paramers the row and colom size
-                                         the character array corisponds to a color.*/
-    /* int i,j, temp;
+                                         the character array corisponds to a color.
+    int i,j, temp;
     srand((unsigned)time(NULL));
     for(i=0;i<rows;i++){
         for(j=0;j<cols;j++){
