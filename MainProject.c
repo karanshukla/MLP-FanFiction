@@ -233,7 +233,7 @@ int ColPick (int col, int COL)
 		return b;
 	}
 }
-* /
+*/
 
 
 
