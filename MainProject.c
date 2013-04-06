@@ -13,8 +13,7 @@ int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid o
 void dropDown(char arr[][36], int ROW, int COL);	//drops the letter down to fill empty spaces
 void shrinkSideways(char arr[][36], int ROW, int *COL);	//collapses empty columns TO THE LEFT TO THE LEFT
 void coordSelect (int *x, int *y, int ROW, int COL); // will continue to ask user for coord until it gets one within board and playable
-int deleteAreaCheck(int rows, int cols, char arr[][36]);	//checks for moves and calls deleteArea to delete shit
-int deleteArea(char given, int x, int y, char arr[][36], int score);	//I kill characters to make them 0
+
 
 //AI Stuff
 int RowPick (int row, int ROW);	//randomly picks a row
@@ -51,6 +50,7 @@ int main (void) //MAIN!
 			scanf("%c", &decision);
 			printBoard(arr, ROW, COL);
 			coordSelect(&x, &y, ROW, COL);
+			
 			}
 
 	/*else if (board == '2'){
@@ -259,7 +259,7 @@ int deleteArea(char given, int x, int y, char arr[][36], int score){//this is a 
         return score;
     }
     return 0;
-}}
+}
 /*--- thus is Rachel Baker's print board--- keep it as a refference?
 void printBoard(int rows, int cols, char arr[][36]){
     int i, j;
