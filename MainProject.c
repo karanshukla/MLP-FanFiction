@@ -2,6 +2,7 @@
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
 char NumToColour(int num); //this function takes random int's 1-4 and convert them to char's
 int RowDefine (); //asks for # of rows
@@ -9,11 +10,10 @@ int ColDefine ();	//asks for # of cols
 void compileBoard (char arr[][36], int ROW, int COL);	//sends back an array full of women
 void printBoard (char arr[][36], int ROW, int COL);	//self-explanatory
 int deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
-int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by programn
+int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by program
 void dropDown(char arr[][36], int ROW, int COL);	//drops the letter down to fill empty spaces
 void shrinkSideways(char arr[][36], int ROW, int *COL);	//collapses empty columns TO THE LEFT TO THE LEFT
-void coordSelect (int *x, int *y, int ROW, int COL); // will continue to ask user for coord until it gets one within board and playable
-
+void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]); // will continue to ask user for coord until it gets one within board and playable
 
 //AI Stuff
 int RowPick (int row, int ROW);	//randomly picks a row
@@ -53,8 +53,7 @@ int main (void) //MAIN!
 		while (decision == '\n'){
 			scanf("%c", &decision);
 			printBoard(arr, ROW, COL);
-			coordSelect(x, y, ROW, COL);
-			score = deleteArea(given, *x, *y, arr, score);
+			coordSelect(x, y, ROW, COL, arr);
 			printf("\n\nYour score is %d\n", score);
 			}
 
@@ -175,18 +174,13 @@ for (test=(marker+cave);test<*COL;test++,marker++){
 
 *COL-=cave;	//DIE!!!!!(shrinkage of array)
 return;}
-void coordSelect (int *x, int *y, int ROW, int COL) // will continue to ask user for coord until it gets one within board and playable
+void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will continue to ask user for coord until it gets one within board and playable
 {
 		printf ("\nPlease enter a set of coordinates that is within the grid and adjacent to at least one identical cart (row, column): ");
             scanf("%d %d", x, y);
-			while (*x >= COL || *x < 0){
-			printf("\nEnter a valid x coordinate:");
-			scanf("%d", x);
-		}
-		
-		while (*y >= ROW || *y < 0){
-			printf("Enter a valid y-coordinate:");
-			scanf("%d", y);
+		while (deleteAreaCheck(*x, *y, arr) == 0 || *x >= COL || *x < 0 || *y >= ROW || *y < 0){
+		printf("Sorry, that's not a valid move, try entering a new set of coordinates:");
+		scanf("%d %d", x, y);
 		}
         printf ("You have selected %d %d", (*x), (*y));
         return;
