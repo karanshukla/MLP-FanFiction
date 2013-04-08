@@ -25,14 +25,14 @@ FILE*logfile; //Global Pointer
 
 int main (void) //MAIN!
 {
-    char arr[36][36];
+    char arr[36][36]; //main array
     int ROW,COL;
     int *x; //Pointer for x co-ordinate
     int *y; //Pointer for y co-ordinate
-    x = (int*)(malloc(1 * sizeof(int)));
+    x = (int*)(malloc(1 * sizeof(int))); //declare memory for the array, very efficient!
     y = (int*)(malloc(1* sizeof(int)));
-    char given;
-    int score = 0;
+    char given; //given is the character corresponding to the coordinate
+    int score = 0; Overall score
 
     printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
     char choice = getchar(); //menu choice
@@ -45,7 +45,7 @@ int main (void) //MAIN!
     scanf ("%c", &board);
     if (board == '1') { // this part is from the bottom
         //file(); We'll add this later!
-        ROW = RowDefine();  //don't think you need to send an integer over... Or maybe use pointers
+        ROW = RowDefine();  //This one doesnt use pointers, but coordselect does! Some variety eh?
         printf("\nYou have entered %d rows.\n", ROW);
         COL = ColDefine();
         printf("You have entered %d columns,\n", COL);
