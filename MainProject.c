@@ -12,7 +12,7 @@ void printBoard (char arr[][36], int ROW, int COL); //self-explanatory
 int deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
 int deleteArea(char given, int x, int y, char arr[][36], int score);//gets rid of area that is not used by program
 void dropDown(char arr[][36], int ROW, int COL);    //drops the letter down to fill empty spaces
-void shrinkSideways(char arr[][36], int ROW, int *COL); //collapses empty columns TO THE LEFT TO THE LEFT
+void shrinkSideways(char arr[][36], int ROW, int COL); //collapses empty columns TO THE LEFT TO THE LEFT
 int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]); // will continue to ask user for coord until it gets one within board and playable
 int movesleft(int row, int cols, char arr[][36]);
 void computermove(int *x, int *y,int row, int cols, char arr[][36]);
@@ -31,7 +31,7 @@ int main (void) //MAIN!
     int *x; //Pointer for x co-ordinate
     int *y; //Pointer for y co-ordinate
     x = (int*)(malloc(1 * sizeof(int))); //declare memory for the array, very efficient!
-    y = (int*)(malloc(1* sizeof(int)));
+    y = (int*)(malloc(1 * sizeof(int))); 
     char given; //given is the character corresponding to the coordinate
     int score = 0; //Overall score
 
@@ -57,12 +57,9 @@ int main (void) //MAIN!
             printBoard(arr, ROW, COL);
             score += coordSelect(x, y, ROW, COL, arr);
             printf("\n\nYour score is %d\n", score);    //score is fucked up right now
-    /*else if (board == '2'){
-        //FileBoard(void); //look below for this function
-    }
-    else
-        return -2;
-        */
+            dropDown(arr, ROW, COL);
+    		shrinkSideways(arr, ROW, COL);
+ 
 
         }
 }
@@ -183,10 +180,10 @@ int movesleft(int row, int cols, char arr[][36]){//returns 1 if there are any mo
     }
     return 0;
 }
-void shrinkSideways(char arr[][36], int ROW, int *COL){
+void shrinkSideways(char arr[][36], int ROW, int COL){
 int i, j, cave, marker=0,test;
 
-for (j=0, cave=0;j<*COL;j++){   //sweeping from left to right
+for (j=0, cave=0;j<COL;j++){   //sweeping from left to right
 if (arr[ROW-1][j]==0){  //checks bottom number of column to see if column is empty
     if (cave==0)
         marker=j;   //marks first space
@@ -194,13 +191,13 @@ if (arr[ROW-1][j]==0){  //checks bottom number of column to see if column is emp
     }
 }   //end looking for caves
 
-for (test=(marker+cave);test<*COL;test++,marker++){
+for (test=(marker+cave);test<COL;test++,marker++){
     for (i=0;i<ROW;i++){
         arr[i][marker]=arr[i][test];    //overwriting
     }
 }   //end shrinking the damn thing
 
-*COL-=cave; //DIE!!!!!(shrinkage of array)
+COL-=cave; //DIE!!!!!(shrinkage of array)
 return;}
 int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will continue to ask user for coord until it gets one within board and playable
 {
