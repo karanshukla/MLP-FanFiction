@@ -207,7 +207,7 @@ int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will conti
     return score;
 }
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
-logfile = fopen("log.txt", "a");
+logfile = fopen("log.txt", "w");
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
@@ -215,6 +215,7 @@ for (i=0;i<ROW;i++){
         arr[i][j]=NumToColour(rand()%4+1); //NumToColour sends back chars to be written into array
         fprintf(logfile, "%c", arr[i][j]);
     }
+    printf("\n");
 }
 return;
 }
