@@ -57,7 +57,7 @@ int main (void) //MAIN!
             score += coordSelect(x, y, ROW, COL, arr);
             printf("\n\nYour score is %d\n", score);    //score is fucked up right now
             dropDown(arr, ROW, COL);
-            shrinkSideways(arr, ROW, COL);
+        	shrinkSideways(arr, ROW, COL);
         	sleep(2);
     		system("clear");
         }
@@ -89,9 +89,9 @@ if (board == 4)
         	shrinkSideways(arr, ROW, COL);
         	sleep(2);
     		system("clear");}
-
-return 666;	//if nothing else happens, program returns this weird shit
 }
+return 666;	//if nothing else happens, program returns this weird shit
+
 }
 int RowDefine ()
 {
