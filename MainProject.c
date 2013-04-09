@@ -206,7 +206,7 @@ int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will conti
     int score;
     printf ("\nEnter your Coordinates. First horizontal coordinate then vertical:");
         scanf("%d %d", x, y);
-        score=deleteAreaCheck(*x,(COL - *y -1),arr);
+        score=deleteAreaCheck(*x,(ROW - *y -1),arr);
         printf ("You have selected %d %d", (*x), (*y));
     return score;
 }
