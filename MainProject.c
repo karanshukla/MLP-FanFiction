@@ -16,6 +16,7 @@ void shrinkSideways(char arr[][36], int ROW, int *COL); //collapses empty column
 int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]); // will continue to ask user for coord until it gets one within board and playable
 int movesleft(int row, int cols, char arr[][36]);
 void computermove(int *x, int *y,int row, int cols, char arr[][36]);
+
 //AI Stuff
 int RowPick (int row, int ROW); //randomly picks a row
 int ColPick (int col, int COL); //randomly picks a column
@@ -32,7 +33,7 @@ int main (void) //MAIN!
     x = (int*)(malloc(1 * sizeof(int))); //declare memory for the array, very efficient!
     y = (int*)(malloc(1* sizeof(int)));
     char given; //given is the character corresponding to the coordinate
-    int score = 0; Overall score
+    int score = 0; //Overall score
 
     printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\nPress enter to continue, anything else to quit");
     char choice = getchar(); //menu choice
@@ -54,7 +55,8 @@ int main (void) //MAIN!
         while (decision == '\n'&& movesleft(ROW,COL,arr)){
             scanf("%c", &decision);
             printBoard(arr, ROW, COL);
-            printf("\n\nYour score is %d\n", coordSelect(x, y, ROW, COL, arr));
+            score += coordSelect(x, y, ROW, COL, arr);
+            printf("\n\nYour score is %d\n", score);
     /*else if (board == '2'){
         //FileBoard(void); //look below for this function
     }
@@ -79,7 +81,8 @@ if(board=='3'){
             printf("\n\nYour score is %d\n", score);
 }
 return 0;
-}}
+}
+return;}
 int RowDefine ()
 {
     int r;
@@ -203,8 +206,9 @@ int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will conti
     int score;
     printf ("\nEnter your Coordinates. First horizontal coordinate then vertical:");
         scanf("%d %d", x, y);
-        score=deleteAreaCheck(*x,(COL - *y),arr);
+        score=deleteAreaCheck(*x,(COL - *y -1),arr);
         printf ("You have selected %d %d", (*x), (*y));
+    return score;
 }
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
 logfile = fopen("log.txt", "a");
