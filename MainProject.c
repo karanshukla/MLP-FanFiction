@@ -283,7 +283,7 @@ int deleteAreaCheck(int rows, int cols, char arr[][36]){// this checks if it a v
 int deleteArea(char given, int x, int y, char arr[][36], int score){//this is a recursive function replaces same characters that are touching with a zero
 //returns the number of characters deleted
     if(arr[x][y]==given){
-        arr[x][y]='0'; //if the given char (the one that was selected by the user) is the same as a the new spot given then it is replaced by a zeor
+        arr[x][y]=0; //if the given char (the one that was selected by the user) is the same as a the new spot given then it is replaced by a zeor
         //moveing out to the right and left, up and down
         score+=deleteArea(given, x+1, y, arr, score+1); //returns a score if it runs into the same character
         score+=deleteArea(given, x-1, y, arr, score+1);
