@@ -57,7 +57,8 @@ int main (void) //MAIN!
             score += coordSelect(x, y, ROW, COL, arr);
             printf("\n\nYour score is %d\n", score);    //score is fucked up right now
             dropDown(arr, ROW, COL);
-        	shrinkSideways(arr, ROW, COL);
+            shrinkSideways(arr, ROW, COL);
+        	sleep(3);
     		system("clear");
         }
 }
