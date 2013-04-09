@@ -52,15 +52,13 @@ int main (void) //MAIN!
         printf("You have entered %d columns,\n", COL);
         compileBoard(arr, ROW, COL);
         char decision = '\n';
-        while (decision == '\n'&& movesleft(ROW,COL,arr)){
-            scanf("%c", &decision);
+        while (movesleft(ROW,COL,arr) == 1){
             printBoard(arr, ROW, COL);
             score += coordSelect(x, y, ROW, COL, arr);
             printf("\n\nYour score is %d\n", score);    //score is fucked up right now
             dropDown(arr, ROW, COL);
-    		shrinkSideways(arr, ROW, COL);
- 
-
+        	shrinkSideways(arr, ROW, COL);
+    		system("clear");
         }
 }
 if(board=='2'){}
