@@ -275,6 +275,30 @@ int ColPick (int COL)
 */
 
 
+//FUNCTION THAT CHECKS COORDINATES AND CHANGES TO ZERO. 
+void checkCoord (int x, int y, int ROW, int COL ) {//uses recursion to turn all identical adjacent carts to zero
+
+    if ((x+1) < COL && y < ROW) { //checks to see that (x+1)(y) is within playing board first
+    	if (board[x+1][y] == board[x][y] && (x+1) <= COL && y < ROW[x+1] ) { // if within the board, sets the identical carts to the left of selected cart to zero
+        	checkCoord(x+1, y, board);
+   	}
+    else
+    	break;// if not within board, leaves this loop moves onto the next
+
+    if (board[x-1][y] == board[x][y] && (x-1) > 0 && (x-1) < COL && y > ROW[x-1]) { //rows in each game are different...need to adjust checks the grids to the right of the selected grid
+        checkCoord(x-1, y, board);
+    }
+
+    if (board[x][y+1] == board[x][y] && (y+1) <= COL) { //checks the grids above the selected grid
+        checkCoord(x, y+1, board);
+    }
+
+    if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { //need to fix so that columns restriction changes as col are deleted from the grid checks the grids below the selected grid
+        checkCoord(x, y-1, board);
+    }
+
+    board[x][y]=0;
+}
 
 
 int deleteAreaCheck(int rows, int cols, char arr[][36]){// this checks if it a valid move adn returns the score for the move
@@ -341,31 +365,6 @@ void printBoard(int rows, int cols, char arr[][36]){
     return;
 }
 */
-
-//FUNCTION THAT CHECKS COORDINATES AND CHANGES TO ZERO. 
-void checkCoord (int x, int y, int ROW, int COL ) {//uses recursion to turn all identical adjacent carts to zero
-
-    if ((x+1) < COL && y < ROW) { //checks to see that (x+1)(y) is within playing board first
-    	if (board[x+1][y] == board[x][y] && (x+1) < COL && y < ROW[x+1] ) { // if within the board, sets the identical carts to the left of selected cart to zero
-        	checkCoord(x+1, y, board);
-   	}
-    else
-    	break;// if not within board, leaves this loop moves onto the next
-
-    if (board[x-1][y] == board[x][y] && (x-1) > 0 && (x-1) >= o) { //rows in each game are different...need to adjust checks the grids to the right of the selected grid
-        checkCoord(x-1, y, board);
-    }
-
-    if (board[x][y+1] == board[x][y] && (y+1) <= COL) { //checks the grids above the selected grid
-        checkCoord(x, y+1, board);
-    }
-
-    if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { //need to fix so that columns restriction changes as col are deleted from the grid checks the grids below the selected grid
-        checkCoord(x, y-1, board);
-    }
-
-    board[x][y]=0;
-}
 
 
 /* TWO COMPILE BOARD LOL void compileBoard(int rows, int cols, char arr[][36]){/this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
