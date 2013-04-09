@@ -41,7 +41,7 @@ int main (void) //MAIN!
         return -2; //error code for Program Termination
 
     //Asking if user wants to create own board I did it! return values are really random though.
-    printf ("\nType '1' to start a new game, \nType '2' to load an existing file.\n Type '3' to see the computer play, Anything else to exit.");
+    printf ("\nType '1' to start a new game, \nType '2' to load an existing file.\nType '3' to see the computer play.\nAnything else to exit.\n");
     char board;
     scanf ("%c", &board);
     if (board == '1') { // this part is from the bottom
@@ -56,7 +56,7 @@ int main (void) //MAIN!
             scanf("%c", &decision);
             printBoard(arr, ROW, COL);
             score += coordSelect(x, y, ROW, COL, arr);
-            printf("\n\nYour score is %d\n", score);
+            printf("\n\nYour score is %d\n", score);    //score is fucked up right now
     /*else if (board == '2'){
         //FileBoard(void); //look below for this function
     }
@@ -76,13 +76,14 @@ if(board=='3'){
         compileBoard(arr, ROW, COL);
          while (movesleft(ROW,COL,arr)){
             printBoard(arr, ROW, COL);
-            computermove(*x,*y,ROW,COL,arr);
+            computermove(x,y,ROW,COL,arr);
             score+=deleteAreaCheck(*x,*y,arr);
             printf("\n\nYour score is %d\n", score);
 }
 return 0;
 }
-return;}
+return 666;	//if nothing else happens, program returns this weird shit
+}
 int RowDefine ()
 {
     int r;
