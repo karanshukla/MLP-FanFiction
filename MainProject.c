@@ -18,8 +18,8 @@ int movesleft(int row, int cols, char arr[][36]);
 void computermove(int *x, int *y,int row, int cols, char arr[][36]);
 
 //AI Stuff
-int RowPick (int row, int ROW); //randomly picks a row
-int ColPick (int col, int COL); //randomly picks a column
+int RowPick (int ROW); //randomly picks a row
+int ColPick (int COL); //randomly picks a column
 
 
 FILE*logfile; //Global Pointer
@@ -41,7 +41,7 @@ int main (void) //MAIN!
         return -2; //error code for Program Termination
 
     //Asking if user wants to create own board I did it! return values are really random though.
-    printf ("\nType '1' to start a new game, \nType '2' to load an existing file.\nType '3' to see the computer play.\nAnything else to exit.\n");
+    printf ("\nType '1' to start a new game, \nType '2' to load an existing file.\nType '3' to see the computer play.\nType 4 to see a stupid computer play\nAnything else to exit.\n");
     char board;
     scanf ("%c", &board);
     if (board == '1') { // this part is from the bottom
@@ -58,7 +58,7 @@ int main (void) //MAIN!
             printf("\n\nYour score is %d\n", score);    //score is fucked up right now
             dropDown(arr, ROW, COL);
             shrinkSideways(arr, ROW, COL);
-        	sleep(3);
+        	sleep(2);
     		system("clear");
         }
 }
@@ -75,10 +75,23 @@ if(board=='3'){
             computermove(x,y,ROW,COL,arr);
             score+=deleteAreaCheck(*x,*y,arr);
             printf("\n\nYour score is %d\n", score);
-}
+			}
 return 0;
 }
+
+if (board == 4)
+{
+			while (movesleft(ROW,COL,arr) == 1){
+            printBoard(arr, ROW, COL);
+            score += coordSelect(RowPick(ROW), ColPick(COL),ROW, COL, arr);
+            printf("\n\nYour score is %d\n", score);    //score is fucked up right now
+            dropDown(arr, ROW, COL);
+        	shrinkSideways(arr, ROW, COL);
+        	sleep(2);
+    		system("clear");}
+
 return 666;	//if nothing else happens, program returns this weird shit
+}
 }
 int RowDefine ()
 {
@@ -229,7 +242,7 @@ return;
 
 //These are the AI/Computer Play Functions.
 
-int RowPick (int row, int ROW)
+int RowPick (int ROW)
 {
     srand((unsigned)time(NULL)); //ensure random number
     int Rowpick = rand()%(ROW); //ROWS as defined by the function for grabbing the amount of rows
@@ -237,7 +250,7 @@ int RowPick (int row, int ROW)
     return Rowpick;
 }
 
-int ColPick (int col, int COL)
+int ColPick (int COL)
 {
         srand((unsigned)time(NULL));
         int Colpick = rand() % (COL);
@@ -315,7 +328,6 @@ void computermove(int *x, int *y,int row, int cols, char arr[][36]) {//determins
     }
     return;
 }
-
 
 /*--- thus is Rachel Baker's print board--- keep it as a refference?
 void printBoard(int rows, int cols, char arr[][36]){
