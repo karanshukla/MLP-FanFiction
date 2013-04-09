@@ -216,7 +216,7 @@ for (i=0;i<ROW;i++){
         arr[i][j]=NumToColour(rand()%4+1); //NumToColour sends back chars to be written into array
         fprintf(logfile, "%c", arr[i][j]);
     }
-    fprintf("\n");
+    fprintf(logfile, "\n");
 }
 return;
 }
