@@ -23,20 +23,18 @@ int ColPick (int COL); //randomly picks a column
 
 
 FILE*logfile; //Global Pointer. Do we want to open and close the file everytime we want to write something to it??
-	logfile = fopen("CheckOutLineLog.txt", "w"); // writes a new file called CheckOutLineLog.txt
-	fprintf (logfile, "Rachel Baker, 999 865 196 \n Yung-Hsiang Chih, 999 751 148 \n Polly Lin, 999 639 299\n Karan Shukla, 999 593 293\n\n")
-	fclose (logfile);//^prints our names and student numbers to the file. this one closes the file
-	return 0;
 
 int main (void) //MAIN!
 {
     char arr[36][36]; //main array
+    logfile = fopen("CheckOutLineLog.txt", "w"); // writes a new file called CheckOutLineLog.txt
+	fprintf (logfile, "Rachel Baker, 999 865 196 \n Yung-Hsiang Chih, 999 751 148 \n Polly Lin, 999 639 299\n Karan Shukla, 999 593 293\n\n");
     int ROW,COL;
     int *x; //Pointer for x co-ordinate
     int *y; //Pointer for y co-ordinate
     int area; //to be sent to CoordSelect as pointer
     x = (int*)(malloc(1 * sizeof(int))); //declare memory for the array, very efficient!
-    y = (int*)(malloc(1 * sizeof(int))); 
+    y = (int*)(malloc(1 * sizeof(int)));
     char given; //given is the character corresponding to the coordinate
     int score = 0; //Overall score
 
@@ -49,7 +47,7 @@ int main (void) //MAIN!
     printf ("\nType '1' to start a new game, \nType '2' to load an existing file.\nType '3' to see the computer play.\nType 4 to see a stupid computer play\nAnything else to exit.\n");
     char board;
     scanf ("%c", &board);
-    
+
     if (board == '1') { // this part is from the bottom
         //file(); We'll add this later!
         ROW = RowDefine();  //This one doesnt use pointers, but coordselect does! Some variety eh?
@@ -233,7 +231,7 @@ int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will conti
 }
 
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
-logfile = fopen("CheckOutLineLog.txt", "w");//this is the first time the Log pops up right? -Polly 
+logfile = fopen("CheckOutLineLog.txt", "w");//this is the first time the Log pops up right? -Polly
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
@@ -272,29 +270,29 @@ int FileBoard (void) { //this will read the numbers/characters off the file and 
 	char filename[13]; // reads desired file
 	char c[100]; // characters off file
 	char ch; //characters to be printed to screen
-    
+
     		printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
     		scanf("%s", filename); //did we really want to scanf a string? Why not use a while loop and getchar?
-    
-   		 if ((input = fopen(filename, "r")) == NULL) { // checks to find file and can't 
+
+   		 if ((input = fopen(filename, "r")) == NULL) { // checks to find file and can't
    			 printf("\n Filename invalid");//invalid file
    			 return -1;
     		}
-    
+
   		else {
-   	 		input = fopen(filename, "r");//if valid file, opens it 
+   	 		input = fopen(filename, "r");//if valid file, opens it
    	 		do {
    	 			fgets(c, 100, input); //reads the file
    				printf ("%s", c); // prints the contents of the file to standard output
-   	 		} while ((ch = getc(input)) != EOF) //prints until it reads EOF from file
+   	 		} while ((ch = getc(input)) != EOF); //prints until it reads EOF from file
    		}
-    
+
    		fclose(input);//close the file
     		return FileBoard;
 }
 
 
-//FUNCTION THAT CHECKS COORDINATES AND CHANGES TO ZERO. 
+//FUNCTION THAT CHECKS COORDINATES AND CHANGES TO ZERO.
 int checkCoord (int x, int y, int ROW, int COL, int *area) {//uses recursion to turn all identical adjacent carts to zero
 
     if ((x+1) < COL && y < ROW) { //checks to see that (x+1)(y) is within playing board first
@@ -321,7 +319,7 @@ int checkCoord (int x, int y, int ROW, int COL, int *area) {//uses recursion to 
     }
 
     board[x][y]=0;
-    
+
     return area*area;
 }
 
@@ -421,3 +419,4 @@ void printBoard(int rows, int cols, char arr[][36]){
 
 
     return 0; */
+
