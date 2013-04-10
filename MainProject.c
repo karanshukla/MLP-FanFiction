@@ -23,13 +23,12 @@ int ColPick (int COL); //randomly picks a column
 
 
 FILE*logfile; //Global Pointer. Do we want to open and close the file everytime we want to write something to it??
-	logfile = fopen("CheckOutLineLog.txt", "w"); // writes a new file called CheckOutLineLog.txt
-	fprintf (logfile, "Rachel Baker, 999 865 196 \n Yung-Hsiang Chih, 999 751 148 \n Polly Lin, 999 639 299\n Karan Shukla, 999 593 293\n\n")
-	fclose (logfile);//^prints our names and student numbers to the file. this one closes the file
-	return 0;
 
 int main (void) //MAIN!
 {
+	logfile = fopen("CheckOutLineLog.txt", "w"); // writes a new file called CheckOutLineLog.txt
+	fprintf (logfile, "Rachel Baker, 999 865 196 \n Yung-Hsiang Chih, 999 751 148 \n Polly Lin, 999 639 299\n Karan Shukla, 999 593 293\n\n")
+	fclose (logfile);//^prints our names and student numbers to the file. this one closes the f
     char arr[36][36]; //main array
     int ROW,COL;
     int *x; //Pointer for x co-ordinate
@@ -65,7 +64,7 @@ int main (void) //MAIN!
         	sleep(2);
     		system("clear");
         }
-}
+	}
 if(board=='2'){}
 
 if(board=='3'){
@@ -80,8 +79,7 @@ if(board=='3'){
             score+=deleteAreaCheck(*x,*y,arr);
             printf("\n\nYour score is %d\n", score);
 			}
-return 0;
-}
+	}
 
 if (board == 4)
 {
@@ -225,7 +223,7 @@ int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will conti
     return score;
 }
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
-logfile = fopen("CheckOutLineLog.txt", "w");//this is the first time the Log pops up right? -Polly 
+logfile = fopen("CheckOutLineLog.txt", "a");//this is the first time the Log pops up right? -Polly 
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
@@ -257,7 +255,7 @@ int ColPick (int COL)
         return Colpick;
 }
 
-int FileBoard (void) { //this will read the numbers/characters off the file and print to screen
+void FileBoard (void) { //this will read the numbers/characters off the file and print to screen
 
 	FILE *input; //based off of the input file specification in instructions
 
@@ -282,7 +280,7 @@ int FileBoard (void) { //this will read the numbers/characters off the file and 
    		}
     
    		fclose(input);//close the file
-    		return FileBoard;
+    		
 }
 
 
@@ -294,7 +292,7 @@ void checkCoord (int x, int y, int ROW, int COL ) {//uses recursion to turn all 
         	checkCoord(x+1, y, board);
    	}
     else
-    	break;// if not within board, leaves this loop moves onto the next
+    	break;// if not within board, leaves this loop moves onto the next. This is not a loop...
 
     if (board[x-1][y] == board[x][y] && (x-1) > 0 && (x-1) < COL && y > ROW[x-1]) { //rows in each game are different...need to adjust checks the grids to the right of the selected grid
         checkCoord(x-1, y, board);
@@ -310,7 +308,7 @@ void checkCoord (int x, int y, int ROW, int COL ) {//uses recursion to turn all 
 
     board[x][y]=0;
 }
-
+}
 
 int deleteAreaCheck(int rows, int cols, char arr[][36]){// this checks if it a valid move adn returns the score for the move
     int score=0;
