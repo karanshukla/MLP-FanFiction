@@ -22,7 +22,11 @@ int RowPick (int ROW); //randomly picks a row
 int ColPick (int COL); //randomly picks a column
 
 
-FILE*logfile; //Global Pointer
+FILE*logfile; //Global Pointer. Do we want to open and close the file everytime we want to write something to it??
+	logfile = fopen("CheckOutLineLog.txt", "w"); // writes a new file called CheckOutLineLog.txt
+	fprintf (logfile, "Rachel Baker, 999 865 196 \n Yung-Hsiang Chih, 999 751 148 \n Polly Lin, 999 639 299\n Karan Shukla, 999 593 293\n\n")
+	fclose (logfile);//^prints our names and student numbers to the file. this one closes the file
+	return 0;
 
 int main (void) //MAIN!
 {
@@ -221,7 +225,7 @@ int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will conti
     return score;
 }
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
-logfile = fopen("log.txt", "w");
+logfile = fopen("CheckOutLineLog.txt", "w");//this is the first time the Log pops up right? -Polly 
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
@@ -264,7 +268,7 @@ int FileBoard (void) { //this will read the numbers/characters off the file and 
     		printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
     		scanf("%s", filename); //did we really want to scanf a string? Why not use a while loop and getchar?
     
-   		 if ((input = fopen(filename, "r")) == NULL) { // can't find file
+   		 if ((input = fopen(filename, "r")) == NULL) { // checks to find file and can't 
    			 printf("\n Filename invalid");//invalid file
    			 return -1;
     		}
@@ -280,8 +284,6 @@ int FileBoard (void) { //this will read the numbers/characters off the file and 
    		fclose(input);//close the file
     		return FileBoard;
 }
-
-
 
 
 //FUNCTION THAT CHECKS COORDINATES AND CHANGES TO ZERO. 
