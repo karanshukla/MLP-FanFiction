@@ -155,6 +155,7 @@ printf ("\n");
 }
 return;
 }
+
 //this function drops the letters down to fill the spaces, I call it dropping the bass DROP THA BASS
 void dropDown(char arr[][36], int ROW, int COL){
 int i, j, marker, zero, test;
@@ -187,7 +188,6 @@ int movesleft(int row, int cols, char arr[][36]){//returns 1 if there are any mo
         for (j=0;j<cols;j++){//this goes though the array and sees if there are any charaters that are side by side and the same.
             if(arr[i][j]== arr[i+1][j] || arr[i][j]== arr[i][j+1] || arr[i][j] == arr[i-1][j] || arr[i][j]==arr[i][j-1])
                 return 1;
-
     }
     }
     return 0;
@@ -253,26 +253,35 @@ int ColPick (int COL)
         return Colpick;
 }
 
-/* int FileBoard (void) //this will ready the numbers/characters off the file
-{
-    FILE *input; //based off of the input file specification in instructions
-    char filename[13];
-    printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
-    scanf("%s", filename); //did we really want to scanf a string? Why not use a while loop and getchar?
-    if ((input = fopen(filename, "r")) == NULL) {
-    printf("\n Filename invalid");
-    return -1;
-    }
-    else
-    input = fopen(filename, "r");
-    int b;
-    while (fscanf(input, "%d", &b) != EOF) //loop for getting them.
-    {
-        fscanf(input, "%d", &b);
-        return b;
-    }
+int FileBoard (void) { //this will read the numbers/characters off the file and print to screen
+
+	FILE *input; //based off of the input file specification in instructions
+
+	char filename[13]; // reads desired file
+	char c[100]; // characters off file
+	char ch; //characters to be printed to screen
+    
+    		printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
+    		scanf("%s", filename); //did we really want to scanf a string? Why not use a while loop and getchar?
+    
+   		 if ((input = fopen(filename, "r")) == NULL) { // can't find file
+   			 printf("\n Filename invalid");//invalid file
+   			 return -1;
+    		}
+    
+  		else {
+   	 		input = fopen(filename, "r");//if valid file, opens it 
+   	 		do {
+   	 			fgets(c, 100, input); //reads the file
+   				printf ("%s", c); // prints the contents of the file to standard output
+   	 		} while ((ch = getc(input)) != EOF) //prints until it reads EOF from file
+   		}
+    
+   		fclose(input);//close the file
+    		return FileBoard;
 }
-*/
+
+
 
 
 //FUNCTION THAT CHECKS COORDINATES AND CHANGES TO ZERO. 
@@ -293,7 +302,7 @@ void checkCoord (int x, int y, int ROW, int COL ) {//uses recursion to turn all 
         checkCoord(x, y+1, board);
     }
 
-    if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { //need to fix so that columns restriction changes as col are deleted from the grid checks the grids below the selected grid
+    if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { // checks the grids below the selected grid and turns them to zero
         checkCoord(x, y-1, board);
     }
 
