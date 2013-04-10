@@ -4,27 +4,30 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <Windows.h>
+
+//Function Declarations
 
 char NumToColour(int num); //this function takes random int's 1-4 and convert them to char's
 int RowDefine (); //asks for # of rows
 int ColDefine ();   //asks for # of cols
-void compileBoard (char arr[][36], int ROW, int COL);   //sends back an array full of women    
-void printBoard (char arr[][36],int ROW, int COL); //self-explanatory
-void deleteAreaCheck(int x, int y, char arr[][36]);//checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
+void compileBoard (char arr[][36], int ROW, int COL);   //Creates Initial Board!   
+void printBoard (char arr[][36],int ROW, int COL);     //Print Board
+void deleteAreaCheck(int x, int y, char arr[][36]); //checks if it is a valid move returns the score from deleted area (if it returns 0 then  not a valid move
 int deleteArea(char given, int x, int y, char arr[][36]);//gets rid of area that is not used by program
 void dropDown(char arr[][36], int ROW, int COL);    //drops the letter down to fill empty spaces
-void shrinkSideways(char arr[][36], int ROW, int *COL); //collapses empty columns TO THE LEFT TO THE LEFT
+void shrinkSideways(char arr[][36], int ROW, int *COL); //collapses empty columns to the left
 void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]); // will continue to ask user for coord until it gets one within board and playable
-int movesleft(int row, int cols, char arr[][36]);
-void computermove(int *x, int *y,int row, int cols, char arr[][36]);
-int CalculateScore (char arr[][36], int ROW, int COL);
+int convertCoord (char temp); //Converts coordinates greater than 9 to A, B, C, D etc...
+int movesleft(int row, int cols, char arr[][36]); //Checks if there are moves left
+void computermove(int *x, int *y,int row, int cols, char arr[][36]); //AI or Computer Play
+int CalculateScore (char arr[][36], int ROW, int COL); //Calculates the score
 
-//AI Stuff
+//AI Stuff may be deleted
 int RowPick (int ROW); //randomly picks a row
 int ColPick (int COL); //randomly picks a column
 
-
-FILE*logfile; //Global Pointer
+FILE*logfile; //Global Pointer (We know this is bad practice, but only a pointer!)
 
 int main (void) //MAIN!
 {
@@ -33,9 +36,8 @@ int main (void) //MAIN!
     int *x; //Pointer for x co-ordinate
     int *y; //Pointer for y co-ordinate
     x = (int*)(malloc(1 * sizeof(int))); //declare memory for the array, very efficient!
-    y = (int*)(malloc(1 * sizeof(int)));
-    int score = 0; //Overall score
-
+    y = (int*)(malloc(1 * sizeof(int))); 
+    int score = 0, tmpscore; //tmpscore = score accumulated for that move
     printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\n");
     printf ("\nType '1' to start a new game, \nType '2' to load an existing file.\nType '3' to see the computer play.\nType '4' to see a stupid computer play\nAnything else to exit.\n");
     char board;
@@ -54,16 +56,15 @@ int main (void) //MAIN!
             printf("\n");
             printBoard(arr, ROW, COL);
             coordSelect(x, y, ROW, COL, arr);
-            while (CalculateScore(arr, ROW, COL) == -1)
-        {
-                printf("\n\nNot a valid move, try again buddy!");
-                coordSelect(x, y, ROW, COL, arr);
-        }
-            score += CalculateScore(arr, ROW, COL);
+            tmpscore = CalculateScore(arr, ROW, COL);
+            if(tmpscore == 0){
+                printf("\nYou did not make a valid move! Try again\n");
+            }
+            score += tmpscore;
             dropDown(arr, ROW, COL);
             shrinkSideways(arr, ROW, &COL);
             printf("\n\nYour score is now %d\n", score);
-            printf("\nPlease wait (don't worry, your program is not frozen)");
+            printf("\nPlease wait");
             sleep(3);
             system("clear");
         }
@@ -94,7 +95,7 @@ int ColDefine ()
         while (c < 1 || c > 36);    //again, 1-36
         return c;
 }
-char NumToColour(int num){
+char NumToColour(int num){ 
 char colour;
 if (num==1)    colour = 'r';
 else if (num==2)    colour = 'y';
@@ -111,11 +112,11 @@ for (col=0; col<=ROW; col++){
     for (row=-1; row<COL; row++){
         if (row==-1){        //for y-coordinates
             if (col==ROW)       //for the bottom left corner space
-                printf ("    ");
+                printf ("     ");
             else if ((ROW-col)>10)  //for coordinates bigger than 10, writes alphabet coordinates
-                printf ("%3c ", ((ROW-col) + '9' -3));
+                printf ("%3c  ", ((ROW-col) + '9' -3));
             else
-            printf ("%3d ", ROW-col-1); //y-number coordinates here
+            printf ("%3d  ", ROW-col-1); //y-number coordinates here
         }
         else if (col==ROW){     //for the x-coorfinates
             if (row>9)     //for coordinates bigger than 10, writes alphabet coordinates
@@ -137,7 +138,7 @@ return;
 //this function drops the letters down to fill the spaces, I call it dropping the bass DROP THA BASS
 void dropDown(char arr[][36], int ROW, int COL){
 int i, j, marker, zero, test;//marker marks the first space, zero: number of zeors/spaces to pull down, test top of the space/the start of the characters 
-//that need to be pulled down
+                                //that need to be pulled down
 
 for (j=0;j<COL;j++){    //"sweeps" from left to right, column by column
 
@@ -166,7 +167,9 @@ int movesleft(int row, int cols, char arr[][36]){//returns 1 if there are any mo
     for (i=0; i<row;i++) {
         for (j=0;j<cols;j++){//this goes though the array and sees if there are any charaters that are side by side and the same.
             if(arr[i][j]== arr[i+1][j] || arr[i][j]== arr[i][j+1] || arr[i][j] == arr[i-1][j] || arr[i][j]==arr[i][j-1])
-                return 1;
+                 if(arr[i][j]!=0 && arr[i][j]!='0'){
+                    return 1;
+                    }
 
     }
     }
@@ -195,17 +198,35 @@ return;}
 void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will continue to ask user for coord until it gets one within board and playable
 {
     int score;
+    char tempx, tempy;
     printf ("\nEnter your Coordinates. First horizontal coordinate then vertical. Press enter after every coordinate:");
-        scanf("%d %d", y, x);
+        scanf("%c %c", &tempy, &tempx);
+        *x = convertCoord (tempx);      
+        *y = convertCoord (tempy);
         while (*x < 0 || *x > ROW || *y < 0 || *y > COL)
         {
-            printf("\nGreat Job dumb dumb, you done goofed. Try again!:");
-            scanf("%d %d", y, x);
+            printf("\nYou made an invalid move! Try again!");
+            scanf("%c %c", &tempy, &tempx);
+            *x = convertCoord (tempx);
+            *y = convertCoord (tempy);
         }
         deleteAreaCheck(ROW-1-*x,*y,arr);
         printf ("\nYou have selected %d %d", (*y), (*x));
     return;
 }
+
+int convertCoord (char temp){
+
+int coord;
+
+if (temp>='0' && temp <='9'){
+    coord = temp - '0';
+    return coord;}
+else
+    coord = temp - 'A';
+    return coord;   
+   } 
+
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
 logfile = fopen("log.txt", "w");
 int i, j;
@@ -342,7 +363,9 @@ void computermove(int *x, int *y,int row, int cols, char arr[][36]) {//determine
     }
     for (i=0; i<row;i++) {
         for (j=0;j<cols;j++){//this goes though the copied array and turns everything into a '0'
-            if(newarr[i][j]!='0'){
+            if(newarr[i][j]!='0'&&newarr[i][j]!=0){
+                deleteAreaCheck(i,j,newarr); 
+                tmpscore=CalculateScore(newarr,ROW,COL);
                 if(tmpscore>highscore){//compares if the score for that location is greater than the highest recored score thus far
                     xtmp=i;//this keeps track of the position of where the high score was found
                     ytmp=j;
