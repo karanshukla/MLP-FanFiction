@@ -23,16 +23,18 @@ int ColPick (int COL); //randomly picks a column
 
 
 FILE*logfile; //Global Pointer. Do we want to open and close the file everytime we want to write something to it??
+	logfile = fopen("CheckOutLineLog.txt", "w"); // writes a new file called CheckOutLineLog.txt
+	fprintf (logfile, "Rachel Baker, 999 865 196 \n Yung-Hsiang Chih, 999 751 148 \n Polly Lin, 999 639 299\n Karan Shukla, 999 593 293\n\n")
+	fclose (logfile);//^prints our names and student numbers to the file. this one closes the file
+	return 0;
 
 int main (void) //MAIN!
 {
-	logfile = fopen("CheckOutLineLog.txt", "w"); // writes a new file called CheckOutLineLog.txt
-	fprintf (logfile, "Rachel Baker, 999 865 196 \n Yung-Hsiang Chih, 999 751 148 \n Polly Lin, 999 639 299\n Karan Shukla, 999 593 293\n\n")
-	fclose (logfile);//^prints our names and student numbers to the file. this one closes the f
     char arr[36][36]; //main array
     int ROW,COL;
     int *x; //Pointer for x co-ordinate
     int *y; //Pointer for y co-ordinate
+    int area; //to be sent to CoordSelect as pointer
     x = (int*)(malloc(1 * sizeof(int))); //declare memory for the array, very efficient!
     y = (int*)(malloc(1 * sizeof(int))); 
     char given; //given is the character corresponding to the coordinate
@@ -47,6 +49,7 @@ int main (void) //MAIN!
     printf ("\nType '1' to start a new game, \nType '2' to load an existing file.\nType '3' to see the computer play.\nType 4 to see a stupid computer play\nAnything else to exit.\n");
     char board;
     scanf ("%c", &board);
+    
     if (board == '1') { // this part is from the bottom
         //file(); We'll add this later!
         ROW = RowDefine();  //This one doesnt use pointers, but coordselect does! Some variety eh?
@@ -57,14 +60,16 @@ int main (void) //MAIN!
         char decision = '\n';
         while (movesleft(ROW,COL,arr) == 1){
             printBoard(arr, ROW, COL);
-            score += coordSelect(x, y, ROW, COL, arr);
+            //score += coordSelect(x, y, ROW, COL, arr);
+           area=0;
+           score+=checkCoord(x,y,ROW,COL,&area);
             printf("\n\nYour score is %d\n", score);    //score is fucked up right now
             dropDown(arr, ROW, COL);
         	shrinkSideways(arr, ROW, COL);
         	sleep(2);
     		system("clear");
         }
-	}
+}
 if(board=='2'){}
 
 if(board=='3'){
@@ -76,10 +81,13 @@ if(board=='3'){
          while (movesleft(ROW,COL,arr)){
             printBoard(arr, ROW, COL);
             computermove(x,y,ROW,COL,arr);
-            score+=deleteAreaCheck(*x,*y,arr);
+           // score+=deleteAreaCheck(*x,*y,arr);
+           area=0;
+           score+=checkCoord(x,y,ROW,COL,&area);
             printf("\n\nYour score is %d\n", score);
 			}
-	}
+return 0;
+}
 
 if (board == 4)
 {
@@ -213,17 +221,19 @@ for (test=(marker+cave);test<COL;test++,marker++){
 
 COL-=cave; //DIE!!!!!(shrinkage of array)
 return;}
+
 int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will continue to ask user for coord until it gets one within board and playable
 {
     int score;
     printf ("\nEnter your Coordinates. First horizontal coordinate then vertical:");
-        scanf("%d %d", x, y);
+        scanf("%d %d", x, y);	//should be checking if coord is valid, and also be reading chars and convert
         score=deleteAreaCheck(*x,(ROW - *y -1),arr);
         printf ("You have selected %d %d", (*x), (*y));
     return score;
 }
+
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
-logfile = fopen("CheckOutLineLog.txt", "a");//this is the first time the Log pops up right? -Polly 
+logfile = fopen("CheckOutLineLog.txt", "w");//this is the first time the Log pops up right? -Polly 
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
@@ -255,7 +265,7 @@ int ColPick (int COL)
         return Colpick;
 }
 
-void FileBoard (void) { //this will read the numbers/characters off the file and print to screen
+int FileBoard (void) { //this will read the numbers/characters off the file and print to screen
 
 	FILE *input; //based off of the input file specification in instructions
 
@@ -280,35 +290,41 @@ void FileBoard (void) { //this will read the numbers/characters off the file and
    		}
     
    		fclose(input);//close the file
-    		
+    		return FileBoard;
 }
 
 
 //FUNCTION THAT CHECKS COORDINATES AND CHANGES TO ZERO. 
-void checkCoord (int x, int y, int ROW, int COL ) {//uses recursion to turn all identical adjacent carts to zero
+int checkCoord (int x, int y, int ROW, int COL, int *area) {//uses recursion to turn all identical adjacent carts to zero
 
     if ((x+1) < COL && y < ROW) { //checks to see that (x+1)(y) is within playing board first
     	if (board[x+1][y] == board[x][y] && (x+1) <= COL && y < ROW[x+1] ) { // if within the board, sets the identical carts to the left of selected cart to zero
+        	area++;
         	checkCoord(x+1, y, board);
    	}
-    else
-    	break;// if not within board, leaves this loop moves onto the next. This is not a loop...
+    else	//is this in coordSelect already?
+    	break;// if not within board, leaves this loop moves onto the next
 
     if (board[x-1][y] == board[x][y] && (x-1) > 0 && (x-1) < COL && y > ROW[x-1]) { //rows in each game are different...need to adjust checks the grids to the right of the selected grid
+        area++;
         checkCoord(x-1, y, board);
     }
 
     if (board[x][y+1] == board[x][y] && (y+1) <= COL) { //checks the grids above the selected grid
+        area++;
         checkCoord(x, y+1, board);
     }
 
     if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { // checks the grids below the selected grid and turns them to zero
+        area++;
         checkCoord(x, y-1, board);
     }
 
     board[x][y]=0;
+    
+    return area*area;
 }
-}
+
 
 int deleteAreaCheck(int rows, int cols, char arr[][36]){// this checks if it a valid move adn returns the score for the move
     int score=0;
