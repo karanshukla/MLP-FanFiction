@@ -231,7 +231,7 @@ int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will conti
 }
 
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
-logfile = fopen("CheckOutLineLog.txt", "w");//this is the first time the Log pops up right? -Polly
+logfile = fopen("CheckOutLineLog.txt", "a");//Now we need to append
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
