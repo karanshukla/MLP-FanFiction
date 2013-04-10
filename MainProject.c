@@ -104,7 +104,6 @@ else if (board == 4)
 else 
 return 666;	//if nothing else happens, program returns this weird shit
 
-}
 int RowDefine ()
 {
     int r;
@@ -136,7 +135,7 @@ else if (num==3)    colour = 'b';
 else if (num==4)    colour = 'g';
 return colour;
 }
-
+/*
 void printBoard (char arr[][36], int ROW, int COL){ //most of the code is writing coordinates
 
 int col, row;   //row and col are inverted because of some weird logic going on here
@@ -167,7 +166,7 @@ printf ("\n");
 }
 return;
 }
-
+*/
 //this function drops the letters down to fill the spaces, I call it dropping the bass DROP THA BASS
 void dropDown(char arr[][36], int ROW, int COL){
 int i, j, marker, zero, test;
@@ -200,6 +199,7 @@ int movesleft(int row, int cols, char arr[][36]){//returns 1 if there are any mo
         for (j=0;j<cols;j++){//this goes though the array and sees if there are any charaters that are side by side and the same.
             if(arr[i][j]== arr[i+1][j] || arr[i][j]== arr[i][j+1] || arr[i][j] == arr[i-1][j] || arr[i][j]==arr[i][j-1])
                 return 1;
+
     }
     }
     return 0;
@@ -223,19 +223,17 @@ for (test=(marker+cave);test<COL;test++,marker++){
 
 COL-=cave; //DIE!!!!!(shrinkage of array)
 return;}
-
-int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will continue to ask user for coord until it gets one within board and playable
+void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will continue to ask user for coord until it gets one within board and playable
 {
     int score;
     printf ("\nEnter your Coordinates. First horizontal coordinate then vertical:");
-        scanf("%d %d", x, y);	//should be checking if coord is valid, and also be reading chars and convert
-        score=deleteAreaCheck(*x,(ROW - *y -1),arr);
+        scanf("%d %d", y, x);
+        deleteAreaCheck(ROW-1-*x,*y,arr);
         printf ("You have selected %d %d", (*x), (*y));
-    return score;
+    return;
 }
-
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
-logfile = fopen("CheckOutLineLog.txt", "a");//Now we need to append
+logfile = fopen("log.txt", "w");
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
@@ -267,93 +265,75 @@ int ColPick (int COL)
         return Colpick;
 }
 
-int FileBoard (void) { //this will read the numbers/characters off the file and print to screen
-
-	FILE *input; //based off of the input file specification in instructions
-
-	char filename[13]; // reads desired file
-	char c[100]; // characters off file
-	char ch; //characters to be printed to screen
-
-    		printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
-    		scanf("%s", filename); //did we really want to scanf a string? Why not use a while loop and getchar?
-
-   		 if ((input = fopen(filename, "r")) == NULL) { // checks to find file and can't
-   			 printf("\n Filename invalid");//invalid file
-   			 return -1;
-    		}
-
-  		else {
-   	 		input = fopen(filename, "r");//if valid file, opens it
-   	 		do {
-   	 			fgets(c, 100, input); //reads the file
-   				printf ("%s", c); // prints the contents of the file to standard output
-   	 		} while ((ch = getc(input)) != EOF); //prints until it reads EOF from file
-   		}
-
-   		fclose(input);//close the file
-    		return FileBoard;
+/* int FileBoard (void) //this will ready the numbers/characters off the file
+{
+    FILE *input; //based off of the input file specification in instructions
+    char filename[13];
+    printf("\n\n You have decided to use an existing board. Please enter a filename (xxxxxxxx.yyy): ");
+    scanf("%s", filename); //did we really want to scanf a string? Why not use a while loop and getchar?
+    if ((input = fopen(filename, "r")) == NULL) {
+    printf("\n Filename invalid");
+    return -1;
+    }
+    else
+    input = fopen(filename, "r");
+    int b;
+    while (fscanf(input, "%d", &b) != EOF) //loop for getting them.
+    {
+        fscanf(input, "%d", &b);
+        return b;
+    }
 }
+*/
 
-
+/*
 //FUNCTION THAT CHECKS COORDINATES AND CHANGES TO ZERO.
-int checkCoord (int x, int y, int ROW, int COL, int *area) {//uses recursion to turn all identical adjacent carts to zero
+void checkCoord (int x, int y, int ROW, int COL, char board[][36] ) {//uses recursion to turn all identical adjacent carts to zero
 
     if ((x+1) < COL && y < ROW) { //checks to see that (x+1)(y) is within playing board first
     	if (board[x+1][y] == board[x][y] && (x+1) <= COL && y < ROW[x+1] ) { // if within the board, sets the identical carts to the left of selected cart to zero
-        	area++;
         	checkCoord(x+1, y, board);
    	}
-    else	//is this in coordSelect already?
+    else
     	break;// if not within board, leaves this loop moves onto the next
 
     if (board[x-1][y] == board[x][y] && (x-1) > 0 && (x-1) < COL && y > ROW[x-1]) { //rows in each game are different...need to adjust checks the grids to the right of the selected grid
-        area++;
         checkCoord(x-1, y, board);
     }
 
     if (board[x][y+1] == board[x][y] && (y+1) <= COL) { //checks the grids above the selected grid
-        area++;
         checkCoord(x, y+1, board);
     }
 
-    if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { // checks the grids below the selected grid and turns them to zero
-        area++;
+    if (board[x][y-1] == board[x][y] && (y-1) <= COL && (y-1) >= 0) { //need to fix so that columns restriction changes as col are deleted from the grid checks the grids below the selected grid
         checkCoord(x, y-1, board);
     }
 
     board[x][y]=0;
-
-    return area*area;
 }
-
-
-int deleteAreaCheck(int rows, int cols, char arr[][36]){// this checks if it a valid move adn returns the score for the move
+*/
+void deleteAreaCheck(int rows, int cols, char arr[][36]){// this checks if it a valid move adn returns the score for the move
     int score=0;
     char given=arr[rows][cols];
     if(arr[rows+1][cols]==given || arr[rows][cols+1]==given || arr[rows-1][cols]==given || arr[rows][cols-1]==given){
-        score=deleteArea(given, rows, cols, arr, score);
+        deleteArea(given, rows, cols, arr);
     }
 
-    return score*score;
+    return;
 }
-int deleteArea(char given, int x, int y, char arr[][36], int score){//this is a recursive function replaces same characters that are touching with a zero
+int deleteArea(char given, int x, int y, char arr[][36]){//this is a recursive function replaces same characters that are touching with a zero
 //returns the number of characters deleted
     if(arr[x][y]==given){
-        arr[x][y]=0; //if the given char (the one that was selected by the user) is the same as a the new spot given then it is replaced by a zeor
+        arr[x][y]='0'; //if the given char (the one that was selected by the user) is the same as a the new spot given then it is replaced by a zeor
         //moveing out to the right and left, up and down
-        score+=deleteArea(given, x+1, y, arr, score+1); //returns a score if it runs into the same character
-        score+=deleteArea(given, x-1, y, arr, score+1);
-        score+=deleteArea(given, x, y+1, arr, score+1);
-        score+=deleteArea(given, x, y-1, arr, score+1);
-        return score;
+        return deleteArea(given, x+1, y, arr)+deleteArea(given, x-1, y, arr)+deleteArea(given, x, y+1, arr)+deleteArea(given, x, y-1, arr);
     }
-    return 0;
+    return;
 }
 void computermove(int *x, int *y,int row, int cols, char arr[][36]) {//determins the best move for the computer to make
     char newarr[36][36];
     //copy the array
-    int i, j, xtmp, ytmp, tmpscore=0, highscore=0;
+    int i, j, xtmp=-1, ytmp=-1, tmpscore=0, highscore=0;
     for(i=0;i<row;i++){
         for(j=0;j<cols;j++){
             arr[i][j]=newarr[i][j];
@@ -372,10 +352,12 @@ void computermove(int *x, int *y,int row, int cols, char arr[][36]) {//determins
             arr[i][j]='0';//sets any passed by character to zero;
         }
     }
+    *x=xtmp;
+    *y=ytmp;
     return;
 }
 
-/*--- thus is Rachel Baker's print board--- keep it as a refference?
+//--- this is Rachel Baker's print board--- keep it as a refference?
 void printBoard(int rows, int cols, char arr[][36]){
     int i, j;
     for (i=0; i<rows; i++){
@@ -391,7 +373,6 @@ void printBoard(int rows, int cols, char arr[][36]){
     }
     return;
 }
-*/
 
 
 /* TWO COMPILE BOARD LOL void compileBoard(int rows, int cols, char arr[][36]){/this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
@@ -423,4 +404,3 @@ void printBoard(int rows, int cols, char arr[][36]){
 
 
     return 0; */
-
