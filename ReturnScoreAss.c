@@ -6,11 +6,16 @@
 
 int CalculateScore (char arr[][36], int ROW, int COL){
     int i, j;
-    int score = 0;
+    int fscore = 0; //score for function
+    int tempscore; //dummy variable
     for (i = 0; i < ROW; i++) //Loop through Array
         for (j = 0; j < COL;j++){
+            tempscore = fscore
             if (arr[i][j] == '0')
-                score++; //Increases score!
+                fscore++; //Increases score!
+            else if (tempscore == fscore)
+                return -1;
+       
         }
-    return score*score; //ITS HIP TO BE SQUARE
+    return fscore*fscore; //ITS HIP TO BE SQUARE
 }
