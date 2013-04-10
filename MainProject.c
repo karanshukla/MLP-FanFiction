@@ -32,8 +32,8 @@ int main (void) //MAIN!
     int ROW,COL;
     int *x; //Pointer for x co-ordinate
     int *y; //Pointer for y co-ordinate
-    int area; //to be sent to CoordSelect as pointer
-    x = (int*)(malloc(1 * sizeof(int))); //declare memory for the array, very efficient!
+    int area; //to be sent to CoordSelect as pointer - Better than returning values!
+    x = (int*)(malloc(1 * sizeof(int))); //declare memory for the co-ordinates, Very efficient!
     y = (int*)(malloc(1 * sizeof(int)));
     char given; //given is the character corresponding to the coordinate
     int score = 0; //Overall score
@@ -42,7 +42,8 @@ int main (void) //MAIN!
     char choice = getchar(); //menu choice
     if (choice != '\n')
         return -2; //error code for Program Termination
-
+    else
+    	system("clear");
     //Asking if user wants to create own board I did it! return values are really random though.
     printf ("\nType '1' to start a new game, \nType '2' to load an existing file.\nType '3' to see the computer play.\nType 4 to see a stupid computer play\nAnything else to exit.\n");
     char board;
@@ -68,9 +69,9 @@ int main (void) //MAIN!
     		system("clear");
         }
 }
-if(board=='2'){}
+else if(board=='2'){}
 
-if(board=='3'){
+else if(board=='3'){
         ROW = RowDefine();  //don't think you need to send an integer over... Or maybe use pointers
         printf("\nYou have entered %d rows.\n", ROW);
         COL = ColDefine();
@@ -87,17 +88,20 @@ if(board=='3'){
 return 0;
 }
 
-if (board == 4)
+else if (board == 4)
 {
-			while (movesleft(ROW,COL,arr) == 1){
+	x = &RowPick(ROW);
+	y = &ColPick(COL);
+	while (movesleft(ROW,COL,arr) == 1){
             printBoard(arr, ROW, COL);
-            score += coordSelect(RowPick(ROW), ColPick(COL),ROW, COL, arr);
+            score += coordSelect(x, y, ROW, COL, arr);
             printf("\n\nYour score is %d\n", score);    //score is fucked up right now
             dropDown(arr, ROW, COL);
         	shrinkSideways(arr, ROW, COL);
         	sleep(2);
     		system("clear");}
 }
+else 
 return 666;	//if nothing else happens, program returns this weird shit
 
 }
