@@ -268,7 +268,7 @@ int coord;
 if (temp>='0' && temp <='9'){
     coord = temp - '0';
     printf ("temp is %d\n", temp);
-    return coord;}a
+    return coord;}
 else {
     coord = temp - 'A';
     printf ("temp is %d\n", temp);
