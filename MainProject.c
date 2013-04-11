@@ -18,7 +18,7 @@ int deleteArea(char given, int x, int y, char arr[][36]);//gets rid of area that
 void dropDown(char arr[][36], int ROW, int COL);    //drops the letter down to fill empty spaces
 void shrinkSideways(char arr[][36], int ROW, int *COL); //collapses empty columns to the left
 void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]); // will continue to ask user for coord until it gets one within board and playable
-int convertCoord (int temp); //Converts coordinates greater than 9 to A, B, C, D etc...
+int convertCoord (char temp); //Converts coordinates greater than 9 to A, B, C, D etc...
 int movesleft(int row, int cols, char arr[][36]); //Checks if there are moves left
 void computermove(int *x, int *y,int row, int cols, char arr[][36]); //AI or Computer Play
 int CalculateScore (char arr[][36], int ROW, int COL); //Calculates the score
@@ -261,14 +261,14 @@ void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will cont
     return;
 }
 
-int convertCoord (int temp){
+int convertCoord (char temp){
 
 int coord;
 
 if (temp>='0' && temp <='9'){
     coord = temp - '0';
     printf ("temp is %d\n", temp);
-    return coord;}
+    return coord;}a
 else {
     coord = temp - 'A';
     printf ("temp is %d\n", temp);
