@@ -100,6 +100,8 @@ int main (void) //MAIN!
             }
    }
    else if(board=='4'){//stupid computer play
+      printf("LOL Bye\n");
+   return 0;
    }
    else{
     return 0;
@@ -243,21 +245,25 @@ return;}
 void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will continue to ask user for coord until it gets one within board and playable
 {
     int score;
-    char tempx, tempy, dummy;
-    printf ("\nEnter your Coordinates. First horizontal coordinate then vertical. Press enter after every coordinate:");    
-        scanf("%c", &tempx);
-        dummy = getchar();
-        scanf("%c", &tempy);
-        *x = convertCoord (tempx);
+    char tempx, tempy;
+    printf ("\nEnter your Coordinates (in capitalized letters or numbers). Press enter after every coordinate.");
+    
+    do{
+        printf ("\nEnter horizontal coordinate:");
+        do{
+        tempy = getchar();
+        }while (((tempy>='0'&& tempy<='9')||(tempy>='A'&& tempy<='Z'))==0);
         *y = convertCoord (tempy);
-        /*
-        while (*x < 0 || *x > ROW || *y < 0 || *y > COL)
-        {
-            printf("\nYou made an invalid move! Try again!");
-            *x = convertCoord (tempx);
-            *y = convertCoord (tempy);
-        } */
-        deleteAreaCheck((ROW-1 - *x),*y,arr);
+        
+        printf("Enter vertial coordinate:");
+        do{
+        tempx = getchar();
+        }while (((tempx>='0'&& tempx<='9')||(tempx>='A'&& tempx<='Z'))==0);
+        *x = convertCoord (tempx);
+        
+        }while (*x < 0 || *x > ROW || *y < 0 || *y > COL);
+        
+        deleteAreaCheck(ROW-1-*x,*y,arr);
         printf ("\nYou have selected %d %d", (*y), (*x));
     return;
 }
@@ -270,7 +276,7 @@ if (temp>='0' && temp <='9'){
     coord = temp - '0';
     return coord;}
 else {
-    coord = temp - 55;
+    coord = temp - 'A' + 8;
     return coord;   
    } 
 }
@@ -426,49 +432,3 @@ void computermove(int *x, int *y,int row, int cols, char arr[][36]) {//determine
     *y=ytmp;
     return;
 }
-
-/*
-//--- this is Rachel Baker's print board--- keep it as a refference?
-void printBoard(int rows, int cols, char arr[][36]){
-    int i, j;
-    for (i=0; i<rows; i++){
-            printf("%-2d",rows-i-1);
-            for (j=0;j<cols;j++){
-                printf("%2c", arr[i][j]);
-            }
-        printf ("\n");
-    }
-    printf("\n   ");
-    for(i=0;i<cols;i++){
-        printf("%-2d", i);
-    }
-    return;
-}
-
-
-/* TWO COMPILE BOARD LOL void compileBoard(int rows, int cols, char arr[][36]){/this function creates an arry of characters (arr) ith the specified size. it is formatted with the colums first (x coordanite) and the rows second (y cordinate)
-                                         it takes as paramers the row and colom size
-                                         the character array corisponds to a color.
-    int i,j, temp;
-    srand((unsigned)time(NULL));
-    for(i=0;i<rows;i++){
-        for(j=0;j<cols;j++){
-            temp=rand()%4+1;
-            arr[i][j]=NumToColour(temp);
-            }
-
-        }
-    return;
-}
-*/
-    /* PSEUDO CODE compileBoard (arr, ROW, COL);
-    while (SearchMove) //I think Rachel already made a function for this?
-    system("cls");  //I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly
-    printfBoard(arr, ROW, COL); //unfortunately the system("cls") will only work in WinBlows
-    coordSelect(void); // asks the user to pick coordinates
-
-    checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. 
-
-    }
-    return 0; */
-   
