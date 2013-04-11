@@ -72,6 +72,8 @@ int main (void) //MAIN!
             sleep(3);
             system("clear");
         }
+        printf("\n\a\aYou have won! Your score was %d, thank you!\n", score);
+        fprintf(logfile, "%d", score);
         }
    else if(board=='2'){//use file functions--- this gest file from user
      FileBoard ( );
@@ -100,12 +102,12 @@ int main (void) //MAIN!
             }
    }
    else if(board=='4'){//stupid computer play
-      printf("LOL Bye\n");
+      printf("\nHow does Math work? LOL Bye\n");
    return 0;
    }
    else{
     return 0;
-     }  //if nothing else happens, program returns this weird shit
+     }  //if nothing else happens, program returns 
     }
 
 
@@ -113,7 +115,7 @@ void LogFile ( ) {
 
     logfile = fopen("CheckOutLineLog.txt", "w");
     fprintf (logfile, "Rachel Baker, 999 865 196\nYung-Hsiang Chih, 999 751 148\nPolly Lin, 999 639 299\nKaran Shukla, 999 593 293\n\n");//prints names to file //Print Board
-
+    fclose(logfile);
 
 return;
 }
