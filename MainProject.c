@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <Windows.h>
+
 
 //Function Declarations
 
@@ -18,7 +18,7 @@ int deleteArea(char given, int x, int y, char arr[][36]);//gets rid of area that
 void dropDown(char arr[][36], int ROW, int COL);    //drops the letter down to fill empty spaces
 void shrinkSideways(char arr[][36], int ROW, int *COL); //collapses empty columns to the left
 void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]); // will continue to ask user for coord until it gets one within board and playable
-int convertCoord (char temp); //Converts coordinates greater than 9 to A, B, C, D etc...
+int convertCoord (int temp); //Converts coordinates greater than 9 to A, B, C, D etc...
 int movesleft(int row, int cols, char arr[][36]); //Checks if there are moves left
 void computermove(int *x, int *y,int row, int cols, char arr[][36]); //AI or Computer Play
 int CalculateScore (char arr[][36], int ROW, int COL); //Calculates the score
@@ -31,6 +31,7 @@ FILE*logfile; //Global Pointer (We know this is bad practice, but only a pointer
 
 int main (void) //MAIN!
 {
+    logfile = fopen("LogFile.txt", "w");
     char arr[36][36]; //main array
     int ROW,COL;
     int *x; //Pointer for x co-ordinate
@@ -40,17 +41,15 @@ int main (void) //MAIN!
     int score = 0, tmpscore; //tmpscore = score accumulated for that move
     printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\n");
     printf ("\nType '1' to start a new game, \nType '2' to load an existing file.\nType '3' to see the computer play.\nType '4' to see a stupid computer play\nAnything else to exit.\n");
-    if(board=='1'||board=='2'||board=='3'||board==
-    char board;
-    ROW = RowDefine();  //This one doesnt use pointers, but coordselect does! Some variety eh?
-    printf("\nYou have entered %d rows.\n", ROW);
-    COL = ColDefine();
-    printf("You have entered %d columns,\n", COL);
-    compileBoard(arr, ROW, COL);
-    scanf ("%c", &board);
+        char board;
+        scanf ("%c", &board);
     if (board == '1') { // this part is from the bottom
         //file(); We'll add this later!
-        
+        ROW = RowDefine();  //This one doesnt use pointers, but coordselect does! Some variety eh?
+        printf("\nYou have entered %d rows.\n", ROW);
+        COL = ColDefine();
+        printf("You have entered %d columns,\n", COL);
+        compileBoard(arr, ROW, COL);
         while (movesleft(ROW, COL, arr) == 1)
         {
             printf("\n");
@@ -62,6 +61,7 @@ int main (void) //MAIN!
             if(tmpscore == 0){
                 printf("\nYou did not make a valid move! Try again\n");
             }
+            fprintf(logfile, "%d %d\n", *x, *y);
             score += tmpscore;
             dropDown(arr, ROW, COL);
             shrinkSideways(arr, ROW, &COL);
@@ -76,11 +76,17 @@ int main (void) //MAIN!
    }
    else if(board=='3'){//computer play
        while(movesleft(ROW,COL,arr)==1){
+            
+            ROW = RowDefine();  //This one doesnt use pointers, but coordselect does! Some variety eh?
+            printf("\nYou have entered %d rows.\n", ROW);
+            COL = ColDefine();
+            printf("You have entered %d columns,\n", COL);
+            compileBoard(arr, ROW, COL);
             printf("\n");
             printf("\nDAMN SON YOUR SCORE IS %d\n", score);
             printf("\n");
             printBoard(arr, ROW, COL);
-            computerMove(x,y,ROW,COL,arr);
+            computermove(x,y,ROW,COL,arr);
             deleteAreaCheck(*x,*y,arr);
             score+=CalculateScore(arr, ROW, COL);
             dropDown(arr, ROW, COL);
@@ -95,8 +101,9 @@ int main (void) //MAIN!
    }
    else{
     return 0; }  //if nothing else happens, program returns this weird shit
+    }
 
-}
+
 void LogFile ( ) {
 
 FILE*logfile;
@@ -262,7 +269,7 @@ if (temp>='0' && temp <='9'){
     coord = temp - '0';
     printf ("temp is %d\n", temp);
     return coord;}
-else
+else {
     coord = temp - 'A';
     printf ("temp is %d\n", temp);
     return coord;   
@@ -309,7 +316,7 @@ int CalculateScore (char arr[][36], int ROW, int COL){
                 arr[i][j]=0;
                 }
         }
-        fprintf (logfile, "%d %d %d\n", tempx, tempy, fscore*fscore); 
+        fprintf (logfile, "%d", fscore*fscore); 
         return fscore*fscore;
  }
  
@@ -406,7 +413,7 @@ void computermove(int *x, int *y,int row, int cols, char arr[][36]) {//determine
         for (j=0;j<cols;j++){//this goes though the copied array and turns everything into a '0'
             if(newarr[i][j]!='0'&&newarr[i][j]!=0){
                 deleteAreaCheck(i,j,newarr); 
-                tmpscore=CalculateScore(newarr,ROW,COL);
+                tmpscore=CalculateScore(newarr, row,cols);
                 if(tmpscore>highscore){//compares if the score for that location is greater than the highest recored score thus far
                     xtmp=i;//this keeps track of the position of where the high score was found
                     ytmp=j;
@@ -458,4 +465,11 @@ void printBoard(int rows, int cols, char arr[][36]){
     /* PSEUDO CODE compileBoard (arr, ROW, COL);
     while (SearchMove) //I think Rachel already made a function for this?
     system("cls");  //I think this is to wipe the last board off the screen right? I think it just makes sure that the grid stays in the same place - Polly
-    printfBoard(arr, ROW, COL); //unfortunately the system("cls") will only 
+    printfBoard(arr, ROW, COL); //unfortunately the system("cls") will only work in WinBlows
+    coordSelect(void); // asks the user to pick coordinates
+
+    checkCoord(void);//checks if the coordinate the user picks is valid and then changes them to zero. 
+
+    }
+    return 0; */
+   
