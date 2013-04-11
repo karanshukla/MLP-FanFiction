@@ -22,6 +22,8 @@ int convertCoord (char temp); //Converts coordinates greater than 9 to A, B, C, 
 int movesleft(int row, int cols, char arr[][36]); //Checks if there are moves left
 void computermove(int *x, int *y,int row, int cols, char arr[][36]); //AI or Computer Play
 int CalculateScore (char arr[][36], int ROW, int COL); //Calculates the score
+void LogFile ( ); //Initialising of log file
+void FileBoard ( ); //Read off input.
 
 //AI Stuff may be deleted
 int RowPick (int ROW); //randomly picks a row
@@ -31,7 +33,7 @@ FILE*logfile; //Global Pointer (We know this is bad practice, but only a pointer
 
 int main (void) //MAIN!
 {
-    logfile = fopen("LogFile.txt", "w");
+    LogFile ( );
     char arr[36][36]; //main array
     int ROW,COL;
     int *x; //Pointer for x co-ordinate
@@ -72,7 +74,7 @@ int main (void) //MAIN!
         }
         }
    else if(board=='2'){//use file functions--- this gest file from user
-       
+     FileBoard ( );
    }
    else if(board=='3'){//computer play
        while(movesleft(ROW,COL,arr)==1){
@@ -100,16 +102,16 @@ int main (void) //MAIN!
    else if(board=='4'){//stupid computer play
    }
    else{
-    return 0; }  //if nothing else happens, program returns this weird shit
+    return 0;
+     }  //if nothing else happens, program returns this weird shit
     }
 
 
 void LogFile ( ) {
 
-FILE*logfile;
     logfile = fopen("CheckOutLineLog.txt", "w");
     fprintf (logfile, "Rachel Baker, 999 865 196\nYung-Hsiang Chih, 999 751 148\nPolly Lin, 999 639 299\nKaran Shukla, 999 593 293\n\n");//prints names to file //Print Board
-    fclose (logfile);//closes logfile
+
 
 return;
 }
@@ -241,22 +243,21 @@ return;}
 void coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will continue to ask user for coord until it gets one within board and playable
 {
     int score;
-    int tempx, tempy;
-    printf ("\nEnter your Coordinates. First horizontal coordinate then vertical. Press enter after every coordinate:");
-        scanf("%d %d", &tempy, &tempx);
-        printf ("tempy is %c",tempy);
+    char tempx, tempy, dummy;
+    printf ("\nEnter your Coordinates. First horizontal coordinate then vertical. Press enter after every coordinate:");    
+        scanf("%c", &tempx);
+        dummy = getchar();
+        scanf("%c", &tempy);
         *x = convertCoord (tempx);
-        printf("x is %d\n", *x);
         *y = convertCoord (tempy);
-        printf("y is %d\n", *y);
+        /*
         while (*x < 0 || *x > ROW || *y < 0 || *y > COL)
         {
             printf("\nYou made an invalid move! Try again!");
-            scanf("%d %d", &tempy, &tempx);
             *x = convertCoord (tempx);
             *y = convertCoord (tempy);
-        }
-        deleteAreaCheck(ROW-1-*x,*y,arr);
+        } */
+        deleteAreaCheck((ROW-1 - *x),*y,arr);
         printf ("\nYou have selected %d %d", (*y), (*x));
     return;
 }
@@ -267,16 +268,14 @@ int coord;
 
 if (temp>='0' && temp <='9'){
     coord = temp - '0';
-    printf ("temp is %d\n", temp);
     return coord;}
 else {
-    coord = temp - 'A';
-    printf ("temp is %d\n", temp);
+    coord = temp - 55;
     return coord;   
    } 
 }
 void compileBoard (char arr[][36], int ROW, int COL){ //compile board
-logfile = fopen("log.txt", "w");
+logfile = fopen("CheckOutLineLog.txt", "a");
 int i, j;
 srand ((unsigned)time(NULL));
 for (i=0;i<ROW;i++){
@@ -353,7 +352,7 @@ char ch; //characters to be printed to screen
 /*-int checkCoord (int x, int y, int ROW, int COL, int *area) {//uses recursion to turn all identical adjacent carts to zero
  
  if ((x+1) < COL && y < ROW) { //checks to see that (x+1)(y) is within playing board first
-       if (board[x+1][y] == board[x][y] && (x+1) <= COL && y < ROW[x+1] ) { // if within the board, sets the identical carts to the left of selected cart to zero
+       if (x < COL && board[x+1][y] == board[x][y] && y < ROW[x+1] ) { // if within the board, sets the identical carts to the left of selected cart to zero
 -          area++;
            checkCoord(x+1, y, board);
       }
