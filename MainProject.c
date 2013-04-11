@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
+#include <windows.h>
+#include <unistd.h>
 
 //Function Declarations
 
@@ -39,7 +40,7 @@ int main (void) //MAIN!
     int ROW,COL;
     int *x; //Pointer for x co-ordinate
     int *y; //Pointer for y co-ordinate
-    x = (int*)(malloc(1 * sizeof(int))); //declare memory for the array, very efficient!
+    x = (int*)(malloc(1 * sizeof(int))); //declare memory for the coordinate!, very efficient!
     y = (int*)(malloc(1 * sizeof(int)));
     int score = 0, tmpscore; //tmpscore = score accumulated for that move
     printf("\nWelcome to our APS106 Project. Let's play a game of checkout!\n\n");
@@ -72,10 +73,11 @@ int main (void) //MAIN!
             shrinkSideways(arr, ROW, &COL);
             printf("\n\nYour score is now %d\n", score);
             printf("\nPlease wait");
-            //sleep(3);
+            sleep(3);
             system("clear");
         }
         printf("\n\a\aYou have won! Your score was %d, thank you!\n", score);
+        printBoard(arr, ROW, COL);
         fprintf(logfile, "%d", score);
         }
    else if(board=='2'){//use file functions--- this gest file from user
@@ -98,7 +100,7 @@ int main (void) //MAIN!
             score+=CalculateScore(arr, ROW, COL);
             dropDown(arr, ROW, COL);
             shrinkSideways(arr, ROW, &COL);
-            //sleep(3);
+            sleep(3);
             system("clear");
             }
         if(cont=='q'){
@@ -252,6 +254,7 @@ return;}
 int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will continue to ask user for coord until it gets one within board and playable
 {
     char tempx, tempy;
+    logfile = fopen("CheckOutLineLog.txt", "a");
     printf ("\nEnter your Coordinates (in capitalized letters or numbers). Press enter after every coordinate. To exit type '!'");
 
     do{
@@ -264,7 +267,7 @@ int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will conti
         }while (((tempy>='0'&& tempy<='9')||(tempy>='A'&& tempy<='Z'))==0);
         *y = convertCoord (tempy);
         do{
-            printf("\nEnter vertial coordinate:");
+            printf("\nEnter vertical coordinate:");
             tempx = getchar();
             if(tempx=='!'){
                     return 0;
@@ -276,6 +279,8 @@ int coordSelect (int *x, int *y, int ROW, int COL, char arr[][36]) // will conti
 
         deleteAreaCheck(ROW-1-*x,*y,arr);
         printf ("\nYou have selected %d %d", (*y), (*x));
+        fprintf(logfile, "%d %d", *y, *x);
+        
     return 1;
 }
 
